@@ -211,7 +211,7 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
             loadImage(from: beauty["Sports Recommended Product 2"] as? String, into: RecommendProduct2)
             loadImage(from: beauty["Sports Recommended Product 3"] as? String, into: RecommendProduct3)
             loadImage(from: beauty["Sports Recommended Product 4"] as? String, into: RecommendProduct4)
-//
+
             bannerImageUrls = [
                 beauty["Sports Banner Image 1"] as? String,
                 beauty["Sports Banner Image 2"] as? String,
