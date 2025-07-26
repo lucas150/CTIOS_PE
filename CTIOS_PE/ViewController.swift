@@ -8,20 +8,30 @@
 import UIKit
 import CleverTapSDK
 
-class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class ViewController: UIViewController,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    
+    
+    var bannerImageUrls: [String] = [
+            "https://picsum.photos/400/200?random=1",
+            "https://picsum.photos/400/200?random=2",
+            "https://picsum.photos/400/200?random=3"
+        ]
+
+    
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return bannerImageUrls.count
     }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-          let width = collectionView.frame.width
-          let height = width * 9 / 16 // 16:9 aspect ratio
-          return CGSize(width: width, height: height)
-      }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CarouselCell.identifier, for: indexPath) as! CarouselCell
-        loadImage(from: bannerImageUrls[indexPath.item], into: cell.imageView)
+        let cell = myCollectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! MyCollectionView
+        loadImage(from: bannerImageUrls[indexPath.item], into: cell.myImageView)
         return cell
+
+    }
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: myCollectionView.frame.width, height: myCollectionView.frame.height)
 
     }
     func startCarouselTimer() {
@@ -30,7 +40,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             guard self.bannerImageUrls.count > 1 else { return }
             self.currentCarouselIndex = (self.currentCarouselIndex + 1) % self.bannerImageUrls.count
             let indexPath = IndexPath(item: self.currentCarouselIndex, section: 0)
-            self.CarouselImage.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+            self.myCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         }
     }
 
@@ -40,8 +50,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @IBOutlet weak var OnUserLogin: UIButton!
     @IBOutlet weak var alertbutton: UIButton!
     
-    
-    var bannerImageUrls: [String] = []
     var carouselTimer: Timer?
     var currentCarouselIndex = 0
 
@@ -49,20 +57,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     
     
+    @IBOutlet weak var myCollectionView: UICollectionView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        CarouselImage.delegate = self
-        CarouselImage.dataSource = self
-
         
-        // Set scroll direction
-        if let layout = CarouselImage.collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.scrollDirection = .horizontal
-            layout.minimumLineSpacing = 0
-        }
-        CarouselImage.isPagingEnabled = true
-        CarouselImage.register(CarouselCell.self, forCellWithReuseIdentifier: "CarouselCell")
-
     }
 
     @IBAction func OnUserLogin(_ sender: Any) {
@@ -192,14 +191,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             loadImage(from: beauty["Beauty Recommended Product 3"] as? String, into: RecommendProduct3)
             loadImage(from: beauty["Beauty Recommended Product 4"] as? String, into: RecommendProduct4)
             
-            // Carousel: Combine 3 images into a slide show (optional) or just set 1 image now:
             bannerImageUrls = [
                 beauty["Beauty Banner Image 1"] as? String,
                 beauty["Beauty Banner Image 2"] as? String,
                 beauty["Beauty Banner Image 3"] as? String
             ].compactMap { $0 }
 
-            CarouselImage.reloadData()
+            myCollectionView.reloadData()
             startCarouselTimer()
         }
     }
@@ -213,14 +211,14 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             loadImage(from: beauty["Sports Recommended Product 2"] as? String, into: RecommendProduct2)
             loadImage(from: beauty["Sports Recommended Product 3"] as? String, into: RecommendProduct3)
             loadImage(from: beauty["Sports Recommended Product 4"] as? String, into: RecommendProduct4)
-            
+//
             bannerImageUrls = [
                 beauty["Sports Banner Image 1"] as? String,
                 beauty["Sports Banner Image 2"] as? String,
                 beauty["Sports Banner Image 3"] as? String
             ].compactMap { $0 }
 
-            CarouselImage.reloadData()
+            myCollectionView.reloadData()
             startCarouselTimer()
         }
     }
@@ -240,7 +238,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 beauty["Clothes Banner Image 3"] as? String
             ].compactMap { $0 }
 
-            CarouselImage.reloadData()
+            myCollectionView.reloadData()
             startCarouselTimer()
         }
     }
@@ -253,9 +251,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     @IBOutlet weak var RecommendProduct4: UIImageView!
     
-//    @IBOutlet weak var CarouselImage: UICollectionView!
-    
-    @IBOutlet weak var CarouselImage: UICollectionView!
 }
 
 
