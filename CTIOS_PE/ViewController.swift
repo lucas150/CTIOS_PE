@@ -59,10 +59,31 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
     
     @IBOutlet weak var myCollectionView: UICollectionView!
     
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        
+//    }
+//
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        // Load last selected category
+        if let lastSelected = UserDefaults.standard.string(forKey: "lastSelectedCategory") {
+            switch lastSelected {
+            case "Beauty":
+                Beauty(self)
+            case "Sports":
+                Sports(self)
+            case "Clothes":
+                Clothes(self)
+            default:
+                break
+            }
+        }
     }
+
+
 
     @IBAction func OnUserLogin(_ sender: Any) {
    
@@ -199,47 +220,53 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
 
             myCollectionView.reloadData()
             startCarouselTimer()
+            UserDefaults.standard.set("Beauty", forKey: "lastSelectedCategory")
+
         }
     }
 
     
     @IBAction func Sports(_ sender: Any) {
-        if let beauty = CleverTap.sharedInstance()?.getVariableValue("Sports") as? [String: Any] {
+        if let sports = CleverTap.sharedInstance()?.getVariableValue("Sports") as? [String: Any] {
             
             // Recommended Product 1 - 4
-            loadImage(from: beauty["Sports Recommended Product 1"] as? String, into: RecommendProduct1)
-            loadImage(from: beauty["Sports Recommended Product 2"] as? String, into: RecommendProduct2)
-            loadImage(from: beauty["Sports Recommended Product 3"] as? String, into: RecommendProduct3)
-            loadImage(from: beauty["Sports Recommended Product 4"] as? String, into: RecommendProduct4)
+            loadImage(from: sports["Sports Recommended Product 1"] as? String, into: RecommendProduct1)
+            loadImage(from: sports["Sports Recommended Product 2"] as? String, into: RecommendProduct2)
+            loadImage(from: sports["Sports Recommended Product 3"] as? String, into: RecommendProduct3)
+            loadImage(from: sports["Sports Recommended Product 4"] as? String, into: RecommendProduct4)
 
             bannerImageUrls = [
-                beauty["Sports Banner Image 1"] as? String,
-                beauty["Sports Banner Image 2"] as? String,
-                beauty["Sports Banner Image 3"] as? String
+                sports["Sports Banner Image 1"] as? String,
+                sports["Sports Banner Image 2"] as? String,
+                sports["Sports Banner Image 3"] as? String
             ].compactMap { $0 }
 
             myCollectionView.reloadData()
             startCarouselTimer()
+            UserDefaults.standard.set("Sports", forKey: "lastSelectedCategory")
+
         }
     }
 
     @IBAction func Clothes(_ sender: Any) {
-        if let beauty = CleverTap.sharedInstance()?.getVariableValue("Clothes") as? [String: Any] {
+        if let clothes = CleverTap.sharedInstance()?.getVariableValue("Clothes") as? [String: Any] {
             
             // Recommended Product 1 - 4
-            loadImage(from: beauty["Clothes Recommended Product 1"] as? String, into: RecommendProduct1)
-            loadImage(from: beauty["Clothes Recommended Product 2"] as? String, into: RecommendProduct2)
-            loadImage(from: beauty["Clothes Recommended Product 3"] as? String, into: RecommendProduct3)
-            loadImage(from: beauty["Clothes Recommended Product 4"] as? String, into: RecommendProduct4)
+            loadImage(from: clothes["Clothes Recommended Product 1"] as? String, into: RecommendProduct1)
+            loadImage(from: clothes["Clothes Recommended Product 2"] as? String, into: RecommendProduct2)
+            loadImage(from: clothes["Clothes Recommended Product 3"] as? String, into: RecommendProduct3)
+            loadImage(from: clothes["Clothes Recommended Product 4"] as? String, into: RecommendProduct4)
             
             bannerImageUrls = [
-                beauty["Clothes Banner Image 1"] as? String,
-                beauty["Clothes Banner Image 2"] as? String,
-                beauty["Clothes Banner Image 3"] as? String
+                clothes["Clothes Banner Image 1"] as? String,
+                clothes["Clothes Banner Image 2"] as? String,
+                clothes["Clothes Banner Image 3"] as? String
             ].compactMap { $0 }
 
             myCollectionView.reloadData()
             startCarouselTimer()
+            UserDefaults.standard.set("Clothes", forKey: "lastSelectedCategory")
+
         }
     }
 
