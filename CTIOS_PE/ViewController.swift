@@ -58,15 +58,10 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
     
     
     @IBOutlet weak var myCollectionView: UICollectionView!
-    
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        
-//    }
-//
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
 
         // Load last selected category
         if let lastSelected = UserDefaults.standard.string(forKey: "lastSelectedCategory") {
@@ -99,20 +94,20 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
 
         CleverTap.sharedInstance()?.onUserLogin(profile)
         
-    
-        let var_string = CleverTap.sharedInstance()?.defineVar(name: "var_string", string: "hello, world")
-        let var_int = CleverTap.sharedInstance()?.defineVar(name: "var_int", integer: 10)
-        let var_bool = CleverTap.sharedInstance()?.defineVar(name: "var_bool", boolean: true)
-        let var_float = CleverTap.sharedInstance()?.defineVar(name: "var_float", float: 6.0)
-        let var_double = CleverTap.sharedInstance()?.defineVar(name: "var_double", double: 60.999)
-        let var_short = CleverTap.sharedInstance()?.defineVar(name: "var_short", short: 1)
-        let var_number = CleverTap.sharedInstance()?.defineVar(name: "var_number", number: NSNumber(value: 32))
-        let var_long = CleverTap.sharedInstance()?.defineVar(name: "var_long", long: 64)
-        // Dictionary
-        let var_dict = CleverTap.sharedInstance()?.defineVar(name: "var_dict", dictionary: [
-              "nested_string": "hello, nested",
-              "nested_double": 10.5
-            ])
+//    
+//        let var_string = CleverTap.sharedInstance()?.defineVar(name: "var_string", string: "hello, world")
+//        let var_int = CleverTap.sharedInstance()?.defineVar(name: "var_int", integer: 10)
+//        let var_bool = CleverTap.sharedInstance()?.defineVar(name: "var_bool", boolean: true)
+//        let var_float = CleverTap.sharedInstance()?.defineVar(name: "var_float", float: 6.0)
+//        let var_double = CleverTap.sharedInstance()?.defineVar(name: "var_double", double: 60.999)
+//        let var_short = CleverTap.sharedInstance()?.defineVar(name: "var_short", short: 1)
+//        let var_number = CleverTap.sharedInstance()?.defineVar(name: "var_number", number: NSNumber(value: 32))
+//        let var_long = CleverTap.sharedInstance()?.defineVar(name: "var_long", long: 64)
+//        // Dictionary
+//        let var_dict = CleverTap.sharedInstance()?.defineVar(name: "var_dict", dictionary: [
+//              "nested_string": "hello, nested",
+//              "nested_double": 10.5
+//            ])
 
         let Beauty_Products = CleverTap.sharedInstance()?.defineVar(name: "Beauty", dictionary: [
                 "Beauty Banner Image 1": "https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1200x630_center,f_auto,q_auto:best/rockcms/2025-06/250616-beauty-awards-skincare-vl-main-7d37be.jpg",

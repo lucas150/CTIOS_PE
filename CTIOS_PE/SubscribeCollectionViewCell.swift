@@ -9,4 +9,5 @@ import UIKit
 
 class SubscribeCollectionViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var MyImageView2: UIImageView!
 }

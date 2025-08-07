@@ -19,6 +19,7 @@ class SportsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         if let sports = CleverTap.sharedInstance()?.getVariableValue("Sports") as? [String: Any] {
             loadImage(from: sports["Sports Product 1"] as? String, into: img1)
             loadImage(from: sports["Sports Product 2"] as? String, into: img2)

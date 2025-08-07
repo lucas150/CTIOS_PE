@@ -9,7 +9,7 @@ import UIKit
 import CleverTapSDK
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate,CleverTapDisplayUnitDelegate {
     
     
     
@@ -26,19 +26,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         CleverTap.autoIntegrate()
         registerForPush()
         CleverTap.setDebugLevel(CleverTapLogLevel.debug.rawValue)
-        
-        
-        
-        
+        let props = [
+            "Content": 2
+        ] as [String : Any]
+        CleverTap.sharedInstance()?.recordEvent("Native Display", withProps: props)
+        CleverTap.sharedInstance()?.setDisplayUnitDelegate(self)
      
-        
-        
-        
         
         
         
         // Override point for customization after application launch.
         return true
+    }
+ 
+    func displayUnitsUpdated(_ displayUnits: [CleverTapDisplayUnit]) {
+        print("Display Units received: 123", displayUnits)
+        for unit in displayUnits {
+            if let contents = unit.contents {
+                for content in contents {
+                    print("👉 Title: \(content.title ?? "nil")")
+                    print("👉 Media URL: \(content.mediaUrl ?? "nil")")
+
+                    if let imageUrl = content.mediaUrl {
+//                        bannerImageUrls.append(imageUrl)
+                        print("imageurl",imageUrl )
+                    }
+                }
+            } else {
+                print("❌ No contents in display unit.")
+            }
+        }
     }
 
     // MARK: UISceneSession Lifecycle

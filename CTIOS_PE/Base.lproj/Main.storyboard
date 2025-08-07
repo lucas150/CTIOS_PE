@@ -123,7 +123,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="357" height="181"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img1" id="EDE-eP-hcO">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TrueMoney-logo-200x200" id="EDE-eP-hcO">
                                                     <rect key="frame" x="0.0" y="0.0" width="357" height="192"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -140,23 +140,34 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="MQ7-Ty-qiv"/>
                                 </connections>
                             </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cks-Z6-ANC">
+                                <rect key="frame" x="16" y="730" width="361" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Subscribe Now"/>
+                                <connections>
+                                    <segue destination="mqK-yd-Pxy" kind="show" id="EaB-gF-zr1"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="1dm-hv-DJl">
-                        <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" style="plain" id="M8k-YF-YQ7">
+                    <toolbarItems>
+                        <barButtonItem style="plain" id="M8k-YF-YQ7">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="X6M-ha-zY2">
-                                <rect key="frame" x="16.000000000000007" y="5" width="123.66666666666669" height="34.333333333333336"/>
+                                <rect key="frame" x="16" y="9.6666666666666643" width="361" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="OnUserLogin"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Login"/>
                                 <connections>
                                     <action selector="OnUserLogin:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4Ii-S9-yTL"/>
                                 </connections>
                             </button>
                         </barButtonItem>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" id="1dm-hv-DJl">
+                        <nil key="title"/>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="wC2-Mh-KMS">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="jJv-U3-ug6">
                                 <rect key="frame" x="316" y="4.6666666666666679" width="61" height="35"/>
@@ -172,6 +183,7 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="OnUserLogin" destination="X6M-ha-zY2" id="gF4-cE-Wdg"/>
                         <outlet property="RecommendProduct1" destination="VFX-FD-5WY" id="icX-QH-MxG"/>
@@ -272,7 +284,16 @@
                         <viewLayoutGuide key="safeArea" id="7sX-B3-8AM"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="GWX-o3-ZFM"/>
+                    <navigationItem key="navigationItem" id="GWX-o3-ZFM">
+                        <barButtonItem key="rightBarButtonItem" title="Pay" style="plain" id="Gau-k4-Dpp">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="0hT-mJ-FsT">
+                                <rect key="frame" x="290" y="4.6666666666666679" width="87" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Pay"/>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="img1" destination="q0L-Wd-ALx" id="rzn-bk-Ioo"/>
                         <outlet property="img2" destination="ZL9-NL-Vj9" id="bW3-nv-BPb"/>
@@ -348,7 +369,7 @@
                                 <attributedString key="attributedText">
                                     <fragment content="COMEDY MOVIES">
                                         <attributes>
-                                            <color key="NSColor" red="0.035634996750000002" green="0.062877754620000004" blue="0.89071136709999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <color key="NSColor" red="0.035634996746747388" green="0.062877754616060544" blue="0.89071136713027954" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <font key="NSFont" size="26" name="CourierNewPS-BoldMT"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
@@ -385,6 +406,79 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aIu-TP-iqF" userLabel="Beauty Product" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="760" y="-662"/>
+        </scene>
+        <!--Subscribe View Controller-->
+        <scene sceneID="qmZ-lx-9Fu">
+            <objects>
+                <viewController id="mqK-yd-Pxy" customClass="SubscribeViewController" customModule="CTIOS_PE" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="FOI-wQ-y2c">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="jFz-d5-Z5H">
+                                <rect key="frame" x="16" y="523" width="361" height="252"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="VZO-EN-e6T">
+                                    <size key="itemSize" width="369" height="264"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell2" id="1wO-CW-Smt" customClass="SubscribeCollectionViewCell" customModule="CTIOS_PE" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="-9" width="369" height="264"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="sHX-1f-6OW">
+                                            <rect key="frame" x="0.0" y="0.0" width="369" height="264"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="truemoney1" id="VIt-zo-PGE">
+                                                    <rect key="frame" x="8" y="0.0" width="361" height="260"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="369" height="264"/>
+                                        <connections>
+                                            <outlet property="MyImageView2" destination="VIt-zo-PGE" id="RYH-O6-GLC"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="mqK-yd-Pxy" id="WKI-Cj-gUc"/>
+                                    <outlet property="delegate" destination="mqK-yd-Pxy" id="w0l-NQ-eZh"/>
+                                </connections>
+                            </collectionView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Promotional Offers:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1NR-mx-55J">
+                                <rect key="frame" x="16" y="488" width="307" height="23"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="19"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="TrueMoney-logo-200x200" translatesAutoresizingMaskIntoConstraints="NO" id="p2P-Ba-SA8">
+                                <rect key="frame" x="16" y="103" width="361" height="64"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Screenshot 2025-08-07 at 4.38.15 PM" translatesAutoresizingMaskIntoConstraints="NO" id="Pj0-vh-Tcc">
+                                <rect key="frame" x="16" y="188" width="361" height="292"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="ltP-ea-aEo"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="xCQ-9v-VmU"/>
+                    <connections>
+                        <outlet property="CollectionView" destination="jFz-d5-Z5H" id="XZX-n2-HX9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vdg-b1-UaZ" userLabel="Subscibe" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-967.17557251908397" y="743.66197183098598"/>
         </scene>
         <!--ClothesViewController-->
         <scene sceneID="mCw-H8-oA3">
@@ -454,7 +548,7 @@
                                 <attributedString key="attributedText">
                                     <fragment content="K-DRAMA">
                                         <attributes>
-                                            <color key="NSColor" red="0.035634996750000002" green="0.062877754620000004" blue="0.89071136709999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <color key="NSColor" red="0.035634996746747388" green="0.062877754616060544" blue="0.89071136713027954" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <font key="NSFont" size="26" name="CourierNewPS-BoldMT"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
@@ -488,6 +582,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Screenshot 2025-08-07 at 4.38.15 PM" width="1080" height="882"/>
+        <image name="TrueMoney-logo-200x200" width="200" height="200"/>
         <image name="comdey1" width="550" height="755"/>
         <image name="comdey2" width="500" height="500"/>
         <image name="comdey6" width="800" height="1132"/>
@@ -513,6 +609,7 @@
         <image name="thriller4" width="877" height="1390"/>
         <image name="thriller5" width="877" height="1390"/>
         <image name="thriller6" width="700" height="1038"/>
+        <image name="truemoney1" width="1200" height="525"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
