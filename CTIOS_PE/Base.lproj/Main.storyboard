@@ -149,23 +149,20 @@
                                     <segue destination="mqK-yd-Pxy" kind="show" id="EaB-gF-zr1"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ntT-Pf-T2E">
+                                <rect key="frame" x="16" y="687" width="361" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="gray" title="Login"/>
+                                <connections>
+                                    <action selector="OnUserLogin:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Rc2-Kb-NNt"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <toolbarItems>
-                        <barButtonItem style="plain" id="M8k-YF-YQ7">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="X6M-ha-zY2">
-                                <rect key="frame" x="16" y="9.6666666666666643" width="361" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Login"/>
-                                <connections>
-                                    <action selector="OnUserLogin:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4Ii-S9-yTL"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
-                    </toolbarItems>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" id="1dm-hv-DJl">
                         <nil key="title"/>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="wC2-Mh-KMS">
@@ -185,12 +182,11 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="OnUserLogin" destination="X6M-ha-zY2" id="gF4-cE-Wdg"/>
+                        <outlet property="Login" destination="ntT-Pf-T2E" id="7sf-tj-WvB"/>
                         <outlet property="RecommendProduct1" destination="VFX-FD-5WY" id="icX-QH-MxG"/>
                         <outlet property="RecommendProduct2" destination="Xfq-u0-tmI" id="Xo6-Jy-9d6"/>
                         <outlet property="RecommendProduct3" destination="JA4-QG-LX9" id="ImH-DZ-K8J"/>
                         <outlet property="RecommendProduct4" destination="Fj6-Ov-lyv" id="ePw-9W-lci"/>
-                        <outlet property="alertbutton" destination="jJv-U3-ug6" id="KeL-sy-Zey"/>
                         <outlet property="myCollectionView" destination="Fjh-n8-SbP" id="u0L-Dl-D9w"/>
                     </connections>
                 </viewController>
@@ -433,7 +429,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="369" height="264"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="truemoney1" id="VIt-zo-PGE">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="VIt-zo-PGE">
                                                     <rect key="frame" x="8" y="0.0" width="361" height="260"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -609,7 +605,6 @@
         <image name="thriller4" width="877" height="1390"/>
         <image name="thriller5" width="877" height="1390"/>
         <image name="thriller6" width="700" height="1038"/>
-        <image name="truemoney1" width="1200" height="525"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

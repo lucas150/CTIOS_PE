@@ -47,9 +47,92 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
 
     
     
-    @IBOutlet weak var OnUserLogin: UIButton!
+//    @IBOutlet weak var OnUserLogin: UIButton!
     @IBOutlet weak var alertbutton: UIButton!
     
+    @IBOutlet weak var Login: UIButton!
+    @IBAction func OnUserLogin(_ sender: Any) {
+        let profile: Dictionary<String, AnyObject> = [
+            //Update pre-defined profile properties
+            "name": "Aditya Gandhi" as AnyObject,
+            "email": "aditya@gmail.com" as AnyObject,
+            "identity": 77777878 as AnyObject,
+            //Update custom profile properties
+            "Plan type": "Silver" as AnyObject,
+            "Favorite Food": "Pizza" as AnyObject,
+        ]
+
+        CleverTap.sharedInstance()?.onUserLogin(profile)
+        
+
+
+//        let Beauty_Products = CleverTap.sharedInstance()?.defineVar(name: "Beauty", dictionary: [
+//                "Beauty Banner Image 1": "https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1200x630_center,f_auto,q_auto:best/rockcms/2025-06/250616-beauty-awards-skincare-vl-main-7d37be.jpg",
+//                "Beauty Banner Image 2": "https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1200x630_center,f_auto,q_auto:best/rockcms/2025-06/250616-beauty-awards-skincare-vl-main-7d37be.jpg",
+//                "Beauty Banner Image 3": "https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1200x630_center,f_auto,q_auto:best/rockcms/2025-06/250616-beauty-awards-skincare-vl-main-7d37be.jpg",
+//                
+//                "Beauty Recommended Product 1": "https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1200x630_center,f_auto,q_auto:best/rockcms/2025-06/250616-beauty-awards-skincare-vl-main-7d37be.jpg",
+//                "Beauty Recommended Product 2": "https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1200x630_center,f_auto,q_auto:best/rockcms/2025-06/250616-beauty-awards-skincare-vl-main-7d37be.jpg",
+//                "Beauty Recommended Product 3": "https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1200x630_center,f_auto,q_auto:best/rockcms/2025-06/250616-beauty-awards-skincare-vl-main-7d37be.jpg",
+//                "Beauty Recommended Product 4": "https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1200x630_center,f_auto,q_auto:best/rockcms/2025-06/250616-beauty-awards-skincare-vl-main-7d37be.jpg",
+//
+//                
+//                "Beauty Product 1": "",
+//                "Beauty Product 2": "",
+//                "Beauty Product 3": "",
+//                "Beauty Product 4": "",
+//                "Beauty Product 5": "",
+//                "Beauty Product 6": "",
+//
+//            ])
+//        
+//        
+//        let Sports_Products = CleverTap.sharedInstance()?.defineVar(name: "Sports", dictionary: [
+//                "Sports Banner Image 1": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Sport_balls.svg/768px-Sport_balls.svg.png",
+//                "Sports Banner Image 2": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Sport_balls.svg/768px-Sport_balls.svg.png",
+//                "Sports Banner Image 3": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Sport_balls.svg/768px-Sport_balls.svg.png",
+//                
+//                "Sports Recommended Product 1": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Sport_balls.svg/768px-Sport_balls.svg.png",
+//                "Sports Recommended Product 2": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Sport_balls.svg/768px-Sport_balls.svg.png",
+//                "Sports Recommended Product 3": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Sport_balls.svg/768px-Sport_balls.svg.png",
+//                "Sports Recommended Product 4": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Sport_balls.svg/768px-Sport_balls.svg.png",
+//
+//                
+//                "Sports Product 1": "",
+//                "Sports Product 2": "",
+//                "Sports Product 3": "",
+//                "Sports Product 4": "",
+//                "Sports Product 5": "",
+//                "Sports Product 6": "",
+//
+//            ])
+//        
+//        let Clothes_Products = CleverTap.sharedInstance()?.defineVar(name: "Clothes", dictionary: [
+//                "Clothes Banner Image 1": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTK9M5qPZgJbVCpaNW1mcnm8XSNAZ0e5H0bxXQQko3d0fahijL41eaynuS6bBtNSJ-F45Gr-6d-gp92Z_luBsd-iiLfvVbmkO_-A1jCTNb8",
+//                "Clothes Banner Image 2": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTK9M5qPZgJbVCpaNW1mcnm8XSNAZ0e5H0bxXQQko3d0fahijL41eaynuS6bBtNSJ-F45Gr-6d-gp92Z_luBsd-iiLfvVbmkO_-A1jCTNb8",
+//                "Clothes Banner Image 3": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTK9M5qPZgJbVCpaNW1mcnm8XSNAZ0e5H0bxXQQko3d0fahijL41eaynuS6bBtNSJ-F45Gr-6d-gp92Z_luBsd-iiLfvVbmkO_-A1jCTNb8",
+//                
+//                "Clothes Recommended Product 1": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTK9M5qPZgJbVCpaNW1mcnm8XSNAZ0e5H0bxXQQko3d0fahijL41eaynuS6bBtNSJ-F45Gr-6d-gp92Z_luBsd-iiLfvVbmkO_-A1jCTNb8",
+//                "Clothes Recommended Product 2": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTK9M5qPZgJbVCpaNW1mcnm8XSNAZ0e5H0bxXQQko3d0fahijL41eaynuS6bBtNSJ-F45Gr-6d-gp92Z_luBsd-iiLfvVbmkO_-A1jCTNb8",
+//                "Clothes Recommended Product 3": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTK9M5qPZgJbVCpaNW1mcnm8XSNAZ0e5H0bxXQQko3d0fahijL41eaynuS6bBtNSJ-F45Gr-6d-gp92Z_luBsd-iiLfvVbmkO_-A1jCTNb8",
+//                "Clothes Recommended Product 4": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTK9M5qPZgJbVCpaNW1mcnm8XSNAZ0e5H0bxXQQko3d0fahijL41eaynuS6bBtNSJ-F45Gr-6d-gp92Z_luBsd-iiLfvVbmkO_-A1jCTNb8",
+//                
+//                "Clothes Product 1": "",
+//                "Clothes Product 2": "",
+//                "Clothes Product 3": "",
+//                "Clothes Product 4": "",
+//                "Clothes Product 5": "",
+//                "Clothes Product 6": "",
+//
+//
+//            ])
+//        
+//        
+//        
+//        
+//        CleverTap.sharedInstance()?.syncVariables();
+
+    }
     var carouselTimer: Timer?
     var currentCarouselIndex = 0
 
@@ -79,102 +162,10 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
     }
 
 
-
-    @IBAction func OnUserLogin(_ sender: Any) {
-   
-        let profile: Dictionary<String, AnyObject> = [
-            //Update pre-defined profile properties
-            "name": "Aditya Gandhi" as AnyObject,
-            "email": "aditya@gmail.com" as AnyObject,
-            "identity": 77777878 as AnyObject,
-            //Update custom profile properties
-            "Plan type": "Silver" as AnyObject,
-            "Favorite Food": "Pizza" as AnyObject,
-        ]
-
-        CleverTap.sharedInstance()?.onUserLogin(profile)
-        
-//    
-//        let var_string = CleverTap.sharedInstance()?.defineVar(name: "var_string", string: "hello, world")
-//        let var_int = CleverTap.sharedInstance()?.defineVar(name: "var_int", integer: 10)
-//        let var_bool = CleverTap.sharedInstance()?.defineVar(name: "var_bool", boolean: true)
-//        let var_float = CleverTap.sharedInstance()?.defineVar(name: "var_float", float: 6.0)
-//        let var_double = CleverTap.sharedInstance()?.defineVar(name: "var_double", double: 60.999)
-//        let var_short = CleverTap.sharedInstance()?.defineVar(name: "var_short", short: 1)
-//        let var_number = CleverTap.sharedInstance()?.defineVar(name: "var_number", number: NSNumber(value: 32))
-//        let var_long = CleverTap.sharedInstance()?.defineVar(name: "var_long", long: 64)
-//        // Dictionary
-//        let var_dict = CleverTap.sharedInstance()?.defineVar(name: "var_dict", dictionary: [
-//              "nested_string": "hello, nested",
-//              "nested_double": 10.5
-//            ])
-
-        let Beauty_Products = CleverTap.sharedInstance()?.defineVar(name: "Beauty", dictionary: [
-                "Beauty Banner Image 1": "https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1200x630_center,f_auto,q_auto:best/rockcms/2025-06/250616-beauty-awards-skincare-vl-main-7d37be.jpg",
-                "Beauty Banner Image 2": "https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1200x630_center,f_auto,q_auto:best/rockcms/2025-06/250616-beauty-awards-skincare-vl-main-7d37be.jpg",
-                "Beauty Banner Image 3": "https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1200x630_center,f_auto,q_auto:best/rockcms/2025-06/250616-beauty-awards-skincare-vl-main-7d37be.jpg",
-                
-                "Beauty Recommended Product 1": "https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1200x630_center,f_auto,q_auto:best/rockcms/2025-06/250616-beauty-awards-skincare-vl-main-7d37be.jpg",
-                "Beauty Recommended Product 2": "https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1200x630_center,f_auto,q_auto:best/rockcms/2025-06/250616-beauty-awards-skincare-vl-main-7d37be.jpg",
-                "Beauty Recommended Product 3": "https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1200x630_center,f_auto,q_auto:best/rockcms/2025-06/250616-beauty-awards-skincare-vl-main-7d37be.jpg",
-                "Beauty Recommended Product 4": "https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1200x630_center,f_auto,q_auto:best/rockcms/2025-06/250616-beauty-awards-skincare-vl-main-7d37be.jpg",
-
-                
-                "Beauty Product 1": "",
-                "Beauty Product 2": "",
-                "Beauty Product 3": "",
-                "Beauty Product 4": "",
-                "Beauty Product 5": "",
-                "Beauty Product 6": "",
-
-            ])
-        
-        
-        let Sports_Products = CleverTap.sharedInstance()?.defineVar(name: "Sports", dictionary: [
-                "Sports Banner Image 1": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Sport_balls.svg/768px-Sport_balls.svg.png",
-                "Sports Banner Image 2": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Sport_balls.svg/768px-Sport_balls.svg.png",
-                "Sports Banner Image 3": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Sport_balls.svg/768px-Sport_balls.svg.png",
-                
-                "Sports Recommended Product 1": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Sport_balls.svg/768px-Sport_balls.svg.png",
-                "Sports Recommended Product 2": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Sport_balls.svg/768px-Sport_balls.svg.png",
-                "Sports Recommended Product 3": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Sport_balls.svg/768px-Sport_balls.svg.png",
-                "Sports Recommended Product 4": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Sport_balls.svg/768px-Sport_balls.svg.png",
-
-                
-                "Sports Product 1": "",
-                "Sports Product 2": "",
-                "Sports Product 3": "",
-                "Sports Product 4": "",
-                "Sports Product 5": "",
-                "Sports Product 6": "",
-
-            ])
-        
-        let Clothes_Products = CleverTap.sharedInstance()?.defineVar(name: "Clothes", dictionary: [
-                "Clothes Banner Image 1": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTK9M5qPZgJbVCpaNW1mcnm8XSNAZ0e5H0bxXQQko3d0fahijL41eaynuS6bBtNSJ-F45Gr-6d-gp92Z_luBsd-iiLfvVbmkO_-A1jCTNb8",
-                "Clothes Banner Image 2": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTK9M5qPZgJbVCpaNW1mcnm8XSNAZ0e5H0bxXQQko3d0fahijL41eaynuS6bBtNSJ-F45Gr-6d-gp92Z_luBsd-iiLfvVbmkO_-A1jCTNb8",
-                "Clothes Banner Image 3": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTK9M5qPZgJbVCpaNW1mcnm8XSNAZ0e5H0bxXQQko3d0fahijL41eaynuS6bBtNSJ-F45Gr-6d-gp92Z_luBsd-iiLfvVbmkO_-A1jCTNb8",
-                
-                "Clothes Recommended Product 1": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTK9M5qPZgJbVCpaNW1mcnm8XSNAZ0e5H0bxXQQko3d0fahijL41eaynuS6bBtNSJ-F45Gr-6d-gp92Z_luBsd-iiLfvVbmkO_-A1jCTNb8",
-                "Clothes Recommended Product 2": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTK9M5qPZgJbVCpaNW1mcnm8XSNAZ0e5H0bxXQQko3d0fahijL41eaynuS6bBtNSJ-F45Gr-6d-gp92Z_luBsd-iiLfvVbmkO_-A1jCTNb8",
-                "Clothes Recommended Product 3": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTK9M5qPZgJbVCpaNW1mcnm8XSNAZ0e5H0bxXQQko3d0fahijL41eaynuS6bBtNSJ-F45Gr-6d-gp92Z_luBsd-iiLfvVbmkO_-A1jCTNb8",
-                "Clothes Recommended Product 4": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTK9M5qPZgJbVCpaNW1mcnm8XSNAZ0e5H0bxXQQko3d0fahijL41eaynuS6bBtNSJ-F45Gr-6d-gp92Z_luBsd-iiLfvVbmkO_-A1jCTNb8",
-                
-                "Clothes Product 1": "",
-                "Clothes Product 2": "",
-                "Clothes Product 3": "",
-                "Clothes Product 4": "",
-                "Clothes Product 5": "",
-                "Clothes Product 6": "",
-
-
-            ])
-        
-        
-        
-        
-        CleverTap.sharedInstance()?.syncVariables();
-    }
+//
+//    @IBAction func OnUserLogin(_ sender: Any) {
+//   
+//    }
     
 
 

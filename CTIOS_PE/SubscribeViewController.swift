@@ -8,7 +8,7 @@
 import UIKit
 import CleverTapSDK
 
-class SubscribeViewController: UIViewController,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,CleverTapDisplayUnitDelegate {
+class SubscribeViewController: UIViewController,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     
     var bannerImageUrls: [String] = [
@@ -59,43 +59,68 @@ class SubscribeViewController: UIViewController,UICollectionViewDataSource, UICo
         ] as [String : Any]
 
         CleverTap.sharedInstance()?.recordEvent("Native Display", withProps: props)
-        CleverTap.sharedInstance()?.setDisplayUnitDelegate(self)
+//        CleverTap.sharedInstance()?.setDisplayUnitDelegate(self)
+        if nextValue == 1 {
+            if let sports = CleverTap.sharedInstance()?.getVariableValue("Sports") as? [String: Any] {
+                bannerImageUrls = [
+                    sports["Sports Banner Image 1"] as? String,
+                    sports["Sports Banner Image 2"] as? String,
+                    sports["Sports Banner Image 3"] as? String
+                ].compactMap { $0 }
+
+                CollectionView.reloadData()
+                startCarouselTimer()
+            }
+        } else if nextValue == 2 {
+            if let clothes = CleverTap.sharedInstance()?.getVariableValue("Clothes") as? [String: Any] {
+                bannerImageUrls = [
+                    clothes["Clothes Banner Image 1"] as? String,
+                    clothes["Clothes Banner Image 2"] as? String,
+                    clothes["Clothes Banner Image 3"] as? String
+                ].compactMap { $0 }
+
+                CollectionView.reloadData()
+                startCarouselTimer()
+            }
+        } else {
+            if let beauty = CleverTap.sharedInstance()?.getVariableValue("Beauty") as? [String: Any] {
+
+                bannerImageUrls = [
+                    beauty["Beauty Banner Image 1"] as? String,
+                    beauty["Beauty Banner Image 2"] as? String,
+                    beauty["Beauty Banner Image 3"] as? String
+                ].compactMap { $0 }
+
+                CollectionView.reloadData()
+                startCarouselTimer()
+                UserDefaults.standard.set("Beauty", forKey: "lastSelectedCategory")
+            }
+        }
+
+   
 
 
     }
 
+
 //    func displayUnitsUpdated(_ displayUnits: [CleverTapDisplayUnit]) {
-//        print("Display Units received:", displayUnits)
-//        
+//        print("✅ Display Units received: \(displayUnits)")
 //
-//
-//        // If display units are empty, do nothing (keep existing URLs)
-//        guard !displayUnits.isEmpty else {
-//            print("No display units received, keeping default images.")
-//            return
-//        }
-//
-//        // Replace with images from CleverTap
+//        // Clear existing URLs
 //        bannerImageUrls.removeAll()
 //
 //        for unit in displayUnits {
-//            if let contents = unit.contents {
-//                for content in contents {
-//
-//                    print("👉 Title: \(content.title ?? "nil")")
-//                    print("👉 Media URL: \(content.mediaUrl ?? "nil")")
-//
-//                    if let imageUrl = content.mediaUrl {
-//                        bannerImageUrls.append(imageUrl)
+//            if let extras = unit.customExtras as? [String: Any] {
+//                for (key, value) in extras {
+//                    if key.lowercased().contains("image"), let url = value as? String {
+//                        print("🖼️ Found image: \(url)")
+//                        bannerImageUrls.append(url)
 //                    }
-//                    print("imageurl", bannerImageUrls )
-//
 //                }
 //            } else {
-//                print("❌ No contents in display unit.")
+//                print("❌ No customExtras found in display unit.")
 //            }
 //        }
-//
 //
 //        DispatchQueue.main.async {
 //            self.currentCarouselIndex = 0
@@ -103,31 +128,6 @@ class SubscribeViewController: UIViewController,UICollectionViewDataSource, UICo
 //            self.startCarouselTimer()
 //        }
 //    }
-    func displayUnitsUpdated(_ displayUnits: [CleverTapDisplayUnit]) {
-        print("✅ Display Units received: \(displayUnits)")
-
-        // Clear existing URLs
-        bannerImageUrls.removeAll()
-
-        for unit in displayUnits {
-            if let extras = unit.customExtras as? [String: Any] {
-                for (key, value) in extras {
-                    if key.lowercased().contains("image"), let url = value as? String {
-                        print("🖼️ Found image: \(url)")
-                        bannerImageUrls.append(url)
-                    }
-                }
-            } else {
-                print("❌ No customExtras found in display unit.")
-            }
-        }
-
-        DispatchQueue.main.async {
-            self.currentCarouselIndex = 0
-            self.CollectionView.reloadData()
-            self.startCarouselTimer()
-        }
-    }
 
 
 
