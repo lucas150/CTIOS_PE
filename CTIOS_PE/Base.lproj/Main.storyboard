@@ -166,8 +166,8 @@
                     <navigationItem key="navigationItem" id="1dm-hv-DJl">
                         <nil key="title"/>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="wC2-Mh-KMS">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="jJv-U3-ug6">
-                                <rect key="frame" x="316" y="4.6666666666666679" width="61" height="35"/>
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="jJv-U3-ug6">
+                                <rect key="frame" x="316" y="2" width="61" height="40.333333333333336"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Alert"/>
@@ -282,8 +282,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="GWX-o3-ZFM">
                         <barButtonItem key="rightBarButtonItem" title="Pay" style="plain" id="Gau-k4-Dpp">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="0hT-mJ-FsT">
-                                <rect key="frame" x="290" y="4.6666666666666679" width="87" height="35"/>
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="0hT-mJ-FsT">
+                                <rect key="frame" x="290" y="2" width="87" height="40.333333333333336"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Pay"/>
@@ -430,7 +430,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="VIt-zo-PGE">
-                                                    <rect key="frame" x="8" y="0.0" width="361" height="260"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="379" height="260"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </imageView>
@@ -443,6 +443,12 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="16"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="dataSource" destination="mqK-yd-Pxy" id="WKI-Cj-gUc"/>
                                     <outlet property="delegate" destination="mqK-yd-Pxy" id="w0l-NQ-eZh"/>
@@ -455,17 +461,29 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="TrueMoney-logo-200x200" translatesAutoresizingMaskIntoConstraints="NO" id="p2P-Ba-SA8">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="TrueMoney-logo-200x200" translatesAutoresizingMaskIntoConstraints="NO" id="p2P-Ba-SA8">
                                 <rect key="frame" x="16" y="103" width="361" height="64"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Screenshot 2025-08-07 at 4.38.15 PM" translatesAutoresizingMaskIntoConstraints="NO" id="Pj0-vh-Tcc">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="payment_success" translatesAutoresizingMaskIntoConstraints="NO" id="Pj0-vh-Tcc">
                                 <rect key="frame" x="16" y="188" width="361" height="292"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="16"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ltP-ea-aEo"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="16"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                     <navigationItem key="navigationItem" id="xCQ-9v-VmU"/>
                     <connections>
@@ -578,8 +596,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Screenshot 2025-08-07 at 4.38.15 PM" width="1080" height="882"/>
-        <image name="TrueMoney-logo-200x200" width="200" height="200"/>
+        <image name="TrueMoney-logo-200x200" width="2584" height="450"/>
         <image name="comdey1" width="550" height="755"/>
         <image name="comdey2" width="500" height="500"/>
         <image name="comdey6" width="800" height="1132"/>
@@ -598,6 +615,7 @@
         <image name="k5" width="187" height="269"/>
         <image name="k6" width="850" height="1218"/>
         <image name="kdrama" width="512" height="512"/>
+        <image name="payment_success" width="636" height="458"/>
         <image name="thriller" width="360" height="252"/>
         <image name="thriller1" width="510" height="755"/>
         <image name="thriller2" width="185" height="273"/>
