@@ -25,6 +25,10 @@ class SubscribeViewController: UIViewController,UICollectionViewDataSource, UICo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = CollectionView.dequeueReusableCell(withReuseIdentifier: "cell2", for: indexPath) as! SubscribeCollectionViewCell
+        
+        let imageUrl = bannerImageUrls[indexPath.item]
+            print(":camera_with_flash: Loading image for cell \(indexPath.item): \(imageUrl)")
+        
         loadImage(from: bannerImageUrls[indexPath.item], into: cell.MyImageView2)
         return cell
 
@@ -59,6 +63,56 @@ class SubscribeViewController: UIViewController,UICollectionViewDataSource, UICo
         ] as [String : Any]
 
         CleverTap.sharedInstance()?.recordEvent("Native Display", withProps: props)
+        CleverTap.sharedInstance()?.fetchVariables({ success in
+            print(":white_tick: Variables fetched: \(success)")
+            if nextValue == 1 {
+                if let sports = CleverTap.sharedInstance()?.getVariableValue("Sports") as? [String: Any] {
+                    self.bannerImageUrls = [
+                        sports["Sports Banner Image 1"] as? String,
+                        sports["Sports Banner Image 2"] as? String,
+                        sports["Sports Banner Image 3"] as? String
+                    ].compactMap { $0 }
+                    
+//                    print("sports", bannerImageUrls)
+
+
+                    self.CollectionView.reloadData()
+                    self.startCarouselTimer()
+                }
+            } else if nextValue == 2 {
+                if let clothes = CleverTap.sharedInstance()?.getVariableValue("Clothes") as? [String: Any] {
+                    self.bannerImageUrls = [
+                        clothes["Clothes Banner Image 1"] as? String,
+                        clothes["Clothes Banner Image 2"] as? String,
+                        clothes["Clothes Banner Image 3"] as? String
+                    ].compactMap { $0 }
+
+//                    print("clothes", bannerImageUrls)
+
+                    
+                    self.CollectionView.reloadData()
+                    self.startCarouselTimer()
+                }
+            } else {
+                if let beauty = CleverTap.sharedInstance()?.getVariableValue("Beauty") as? [String: Any] {
+
+                    self.bannerImageUrls = [
+                        beauty["Beauty Banner Image 1"] as? String,
+                        beauty["Beauty Banner Image 2"] as? String,
+                        beauty["Beauty Banner Image 3"] as? String
+                    ].compactMap { $0 }
+
+//                    print("beauty", bannerImageUrls)
+
+                    self.CollectionView.reloadData()
+                    
+                    self.startCarouselTimer()
+                    UserDefaults.standard.set("Beauty", forKey: "lastSelectedCategory")
+                }
+            }
+
+        })
+        
 //        CleverTap.sharedInstance()?.setDisplayUnitDelegate(self)
         if nextValue == 1 {
             if let sports = CleverTap.sharedInstance()?.getVariableValue("Sports") as? [String: Any] {
@@ -67,6 +121,9 @@ class SubscribeViewController: UIViewController,UICollectionViewDataSource, UICo
                     sports["Sports Banner Image 2"] as? String,
                     sports["Sports Banner Image 3"] as? String
                 ].compactMap { $0 }
+                
+                print("sports", bannerImageUrls)
+
 
                 CollectionView.reloadData()
                 startCarouselTimer()
@@ -79,6 +136,9 @@ class SubscribeViewController: UIViewController,UICollectionViewDataSource, UICo
                     clothes["Clothes Banner Image 3"] as? String
                 ].compactMap { $0 }
 
+                print("clothes", bannerImageUrls)
+
+                
                 CollectionView.reloadData()
                 startCarouselTimer()
             }
@@ -91,7 +151,10 @@ class SubscribeViewController: UIViewController,UICollectionViewDataSource, UICo
                     beauty["Beauty Banner Image 3"] as? String
                 ].compactMap { $0 }
 
+                print("beauty", bannerImageUrls)
+
                 CollectionView.reloadData()
+                
                 startCarouselTimer()
                 UserDefaults.standard.set("Beauty", forKey: "lastSelectedCategory")
             }

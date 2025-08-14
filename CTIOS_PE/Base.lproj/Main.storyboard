@@ -105,8 +105,35 @@
                                     <segue destination="4QD-u5-LnV" kind="show" id="UR6-2m-ZiK"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cks-Z6-ANC">
+                                <rect key="frame" x="16" y="772" width="361" height="41"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="TrueMoney">
+                                    <color key="baseBackgroundColor" systemColor="systemOrangeColor"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <segue destination="hB3-Kj-YdM" kind="show" id="RVd-Lg-jTJ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ntT-Pf-T2E">
+                                <rect key="frame" x="16" y="729" width="361" height="41"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="tinted" title="Login">
+                                    <color key="baseBackgroundColor" systemColor="systemOrangeColor"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="OnUserLogin:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Rc2-Kb-NNt"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="TrueMoney-logo-200x200" translatesAutoresizingMaskIntoConstraints="NO" id="Hh8-5C-rkw">
+                                <rect key="frame" x="77" y="56" width="204" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Fjh-n8-SbP">
-                                <rect key="frame" x="16" y="103" width="362" height="202"/>
+                                <rect key="frame" x="16" y="102" width="362" height="202"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="x1J-eA-ekL">
@@ -140,24 +167,6 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="MQ7-Ty-qiv"/>
                                 </connections>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cks-Z6-ANC">
-                                <rect key="frame" x="16" y="730" width="361" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Subscribe Now"/>
-                                <connections>
-                                    <segue destination="mqK-yd-Pxy" kind="show" id="EaB-gF-zr1"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ntT-Pf-T2E">
-                                <rect key="frame" x="16" y="687" width="361" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="gray" title="Login"/>
-                                <connections>
-                                    <action selector="OnUserLogin:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Rc2-Kb-NNt"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -165,20 +174,6 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="1dm-hv-DJl">
                         <nil key="title"/>
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="wC2-Mh-KMS">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="jJv-U3-ug6">
-                                <rect key="frame" x="316" y="2" width="61" height="40.333333333333336"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Alert"/>
-                                <connections>
-                                    <action selector="Alert:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dE6-WS-4cC"/>
-                                </connections>
-                            </button>
-                            <connections>
-                                <action selector="alert:" destination="BYZ-38-t0r" id="l7z-yW-flD"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -282,7 +277,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="GWX-o3-ZFM">
                         <barButtonItem key="rightBarButtonItem" title="Pay" style="plain" id="Gau-k4-Dpp">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="0hT-mJ-FsT">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="0hT-mJ-FsT">
                                 <rect key="frame" x="290" y="2" width="87" height="40.333333333333336"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
@@ -492,7 +487,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vdg-b1-UaZ" userLabel="Subscibe" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-967.17557251908397" y="743.66197183098598"/>
+            <point key="canvasLocation" x="-244" y="-739"/>
         </scene>
         <!--ClothesViewController-->
         <scene sceneID="mCw-H8-oA3">
@@ -594,6 +589,132 @@
             </objects>
             <point key="canvasLocation" x="760" y="706"/>
         </scene>
+        <!--True Money View Controller-->
+        <scene sceneID="tUI-Uq-9OI">
+            <objects>
+                <viewController id="hB3-Kj-YdM" customClass="TrueMoneyViewController" customModule="CTIOS_PE" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9gC-2d-jvH">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R3S-hQ-IEr">
+                                <rect key="frame" x="16" y="729" width="361" height="41"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Pay Now">
+                                    <color key="baseBackgroundColor" systemColor="systemOrangeColor"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <segue destination="mqK-yd-Pxy" kind="show" id="KXz-eW-l29"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="TrueMoney-logo-200x200" translatesAutoresizingMaskIntoConstraints="NO" id="jXB-k9-51K">
+                                <rect key="frame" x="77" y="56" width="204" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gTP-ks-1pV">
+                                <rect key="frame" x="15" y="519" width="362" height="202"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="XZu-xw-bxz">
+                                    <size key="itemSize" width="357" height="181"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell3" id="Yzv-CK-oR5" customClass="TrueMoneyCollectionViewCell" customModule="CTIOS_PE" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="10.666666666666666" width="357" height="181"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="f6r-Fg-aEU">
+                                            <rect key="frame" x="0.0" y="0.0" width="357" height="181"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="4nQ-7k-2Lt">
+                                                    <rect key="frame" x="0.0" y="0.0" width="357" height="192"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                            </subviews>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="357" height="181"/>
+                                        <connections>
+                                            <outlet property="truemoneyImageView" destination="4nQ-7k-2Lt" id="NRu-Jt-ZBH"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="16"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outlet property="dataSource" destination="hB3-Kj-YdM" id="0dM-OH-h0O"/>
+                                    <outlet property="delegate" destination="hB3-Kj-YdM" id="7Nv-c6-kTj"/>
+                                </connections>
+                            </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wVs-KQ-eKs">
+                                <rect key="frame" x="26" y="331" width="67" height="70"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="click1"/>
+                                <connections>
+                                    <action selector="click1:" destination="hB3-Kj-YdM" eventType="touchUpInside" id="SHK-rD-Zg9"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hhS-7c-iL3">
+                                <rect key="frame" x="113" y="329" width="69" height="74"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="click2"/>
+                                <connections>
+                                    <action selector="click2:" destination="hB3-Kj-YdM" eventType="touchUpInside" id="JZ8-c7-UE8"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8op-Uj-uTn">
+                                <rect key="frame" x="215" y="331" width="69" height="74"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="click3"/>
+                                <connections>
+                                    <action selector="click3:" destination="hB3-Kj-YdM" eventType="touchUpInside" id="zEb-bH-QKc"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="homescreen" translatesAutoresizingMaskIntoConstraints="NO" id="w7Q-bq-coz">
+                                <rect key="frame" x="0.0" y="108" width="393" height="423"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hss-GF-uox">
+                                <rect key="frame" x="300" y="329" width="69" height="74"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="click4"/>
+                                <connections>
+                                    <action selector="click4:" destination="hB3-Kj-YdM" eventType="touchUpInside" id="gwI-f8-nEp"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="4M1-93-tH6"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="SWT-HL-h9j">
+                        <nil key="title"/>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="CollectionView" destination="gTP-ks-1pV" id="AS3-v0-pEA"/>
+                        <outlet property="TrueMoneyImageView" destination="w7Q-bq-coz" id="Y4T-bK-VNj"/>
+                        <outlet property="click1" destination="wVs-KQ-eKs" id="dL1-TI-nvM"/>
+                        <outlet property="click2" destination="hhS-7c-iL3" id="xGV-zh-vY7"/>
+                        <outlet property="click3" destination="8op-Uj-uTn" id="xIA-Bh-7Xa"/>
+                        <outlet property="click4" destination="Hss-GF-uox" id="Q7U-AD-RKG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ekq-oH-Tyw" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1153.4351145038167" y="-749.29577464788736"/>
+        </scene>
     </scenes>
     <resources>
         <image name="TrueMoney-logo-200x200" width="2584" height="450"/>
@@ -604,6 +725,7 @@
         <image name="comedy3" width="1400" height="2074"/>
         <image name="comedy4" width="540" height="800"/>
         <image name="comedy5" width="188" height="268"/>
+        <image name="homescreen" width="1024" height="1349"/>
         <image name="img1" width="1920" height="1080"/>
         <image name="img2" width="2500" height="1016"/>
         <image name="img3" width="1024" height="478"/>
@@ -625,6 +747,9 @@
         <image name="thriller6" width="700" height="1038"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

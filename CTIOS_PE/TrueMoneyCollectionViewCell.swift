@@ -9,4 +9,5 @@ import UIKit
 
 class TrueMoneyCollectionViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var truemoneyImageView: UIImageView!
 }

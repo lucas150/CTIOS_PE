@@ -63,6 +63,8 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
         ]
 
         CleverTap.sharedInstance()?.onUserLogin(profile)
+        CleverTap.sharedInstance()?.recordEvent("Native Display")
+        
         
 
 
@@ -144,7 +146,10 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        CleverTap.sharedInstance()?.fetchVariables({ success in
+              print(success)
+            }
+            )
 
         // Load last selected category
         if let lastSelected = UserDefaults.standard.string(forKey: "lastSelectedCategory") {
@@ -203,6 +208,8 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
                 beauty["Beauty Banner Image 2"] as? String,
                 beauty["Beauty Banner Image 3"] as? String
             ].compactMap { $0 }
+            
+            print("beauty", bannerImageUrls)
 
             myCollectionView.reloadData()
             startCarouselTimer()
@@ -226,6 +233,9 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
                 sports["Sports Banner Image 2"] as? String,
                 sports["Sports Banner Image 3"] as? String
             ].compactMap { $0 }
+            
+            print("sports", bannerImageUrls)
+
 
             myCollectionView.reloadData()
             startCarouselTimer()
@@ -248,6 +258,9 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
                 clothes["Clothes Banner Image 2"] as? String,
                 clothes["Clothes Banner Image 3"] as? String
             ].compactMap { $0 }
+            
+            print("clothes", bannerImageUrls)
+
 
             myCollectionView.reloadData()
             startCarouselTimer()
