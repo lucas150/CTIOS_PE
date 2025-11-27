@@ -158,7 +158,7 @@ class TrueMoneyViewController:UIViewController,UICollectionViewDataSource, UICol
      
      func applyCurrentTheme() {
          ThemeManager.shared.applyTheme(
-             to: self,
+            to: self
 //             themeButton: someButton,
 //             labels: [someLabel]
          )
