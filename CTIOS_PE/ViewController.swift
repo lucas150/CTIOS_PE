@@ -9,7 +9,24 @@ import UIKit
 import CleverTapSDK
 
 class ViewController: UIViewController,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+
+    @IBOutlet weak var myCollectionView: UICollectionView!
+
+    @IBOutlet weak var Login: UIButton!
+    @IBOutlet weak var alertbutton: UIButton!
+    @IBOutlet weak var RecommendProduct1: UIImageView!
+    @IBOutlet weak var RecommendProduct2: UIImageView!
+    @IBOutlet weak var RecommendProduct3: UIImageView!
+    @IBOutlet weak var Challenges: UILabel!
+    @IBOutlet weak var Categories: UILabel!
+    @IBOutlet weak var Theme: UIButton!
+    var isChristmasThemeApplied = false
+    var currentThemeBackground: UIColor = .white
+//    @IBOutlet weak var Carosel_bg: UIImageView! //new
     
+
+
+
     
     
     var bannerImageUrls: [String] = [
@@ -34,6 +51,7 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
         return CGSize(width: myCollectionView.frame.width, height: myCollectionView.frame.height)
 
     }
+    
     func startCarouselTimer() {
         carouselTimer?.invalidate()
         carouselTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { _ in
@@ -47,10 +65,7 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
 
     
     
-//    @IBOutlet weak var OnUserLogin: UIButton!
-    @IBOutlet weak var alertbutton: UIButton!
     
-    @IBOutlet weak var Login: UIButton!
     @IBAction func OnUserLogin(_ sender: Any) {
         let profile: Dictionary<String, AnyObject> = [
             //Update pre-defined profile properties
@@ -66,72 +81,6 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
         CleverTap.sharedInstance()?.recordEvent("Native Display")
         
         
-
-
-//        let Beauty_Products = CleverTap.sharedInstance()?.defineVar(name: "Beauty", dictionary: [
-//                "Beauty Banner Image 1": "https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1200x630_center,f_auto,q_auto:best/rockcms/2025-06/250616-beauty-awards-skincare-vl-main-7d37be.jpg",
-//                "Beauty Banner Image 2": "https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1200x630_center,f_auto,q_auto:best/rockcms/2025-06/250616-beauty-awards-skincare-vl-main-7d37be.jpg",
-//                "Beauty Banner Image 3": "https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1200x630_center,f_auto,q_auto:best/rockcms/2025-06/250616-beauty-awards-skincare-vl-main-7d37be.jpg",
-//                
-//                "Beauty Recommended Product 1": "https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1200x630_center,f_auto,q_auto:best/rockcms/2025-06/250616-beauty-awards-skincare-vl-main-7d37be.jpg",
-//                "Beauty Recommended Product 2": "https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1200x630_center,f_auto,q_auto:best/rockcms/2025-06/250616-beauty-awards-skincare-vl-main-7d37be.jpg",
-//                "Beauty Recommended Product 3": "https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1200x630_center,f_auto,q_auto:best/rockcms/2025-06/250616-beauty-awards-skincare-vl-main-7d37be.jpg",
-//                "Beauty Recommended Product 4": "https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1200x630_center,f_auto,q_auto:best/rockcms/2025-06/250616-beauty-awards-skincare-vl-main-7d37be.jpg",
-//
-//                
-//                "Beauty Product 1": "",
-//                "Beauty Product 2": "",
-//                "Beauty Product 3": "",
-//                "Beauty Product 4": "",
-//                "Beauty Product 5": "",
-//                "Beauty Product 6": "",
-//
-//            ])
-//        
-//        
-//        let Sports_Products = CleverTap.sharedInstance()?.defineVar(name: "Sports", dictionary: [
-//                "Sports Banner Image 1": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Sport_balls.svg/768px-Sport_balls.svg.png",
-//                "Sports Banner Image 2": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Sport_balls.svg/768px-Sport_balls.svg.png",
-//                "Sports Banner Image 3": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Sport_balls.svg/768px-Sport_balls.svg.png",
-//                
-//                "Sports Recommended Product 1": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Sport_balls.svg/768px-Sport_balls.svg.png",
-//                "Sports Recommended Product 2": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Sport_balls.svg/768px-Sport_balls.svg.png",
-//                "Sports Recommended Product 3": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Sport_balls.svg/768px-Sport_balls.svg.png",
-//                "Sports Recommended Product 4": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Sport_balls.svg/768px-Sport_balls.svg.png",
-//
-//                
-//                "Sports Product 1": "",
-//                "Sports Product 2": "",
-//                "Sports Product 3": "",
-//                "Sports Product 4": "",
-//                "Sports Product 5": "",
-//                "Sports Product 6": "",
-//
-//            ])
-//        
-        let Test_Products = CleverTap.sharedInstance()?.defineVar(name: "Test Image", dictionary: [
-                "Test Image Banner Image 1": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTK9M5qPZgJbVCpaNW1mcnm8XSNAZ0e5H0bxXQQko3d0fahijL41eaynuS6bBtNSJ-F45Gr-6d-gp92Z_luBsd-iiLfvVbmkO_-A1jCTNb8",
-                "Test Image Banner Image 2": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTK9M5qPZgJbVCpaNW1mcnm8XSNAZ0e5H0bxXQQko3d0fahijL41eaynuS6bBtNSJ-F45Gr-6d-gp92Z_luBsd-iiLfvVbmkO_-A1jCTNb8",
-                "Test Image Banner Image 2": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTK9M5qPZgJbVCpaNW1mcnm8XSNAZ0e5H0bxXQQko3d0fahijL41eaynuS6bBtNSJ-F45Gr-6d-gp92Z_luBsd-iiLfvVbmkO_-A1jCTNb8",
-                "Test Image Banner Image 3": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTK9M5qPZgJbVCpaNW1mcnm8XSNAZ0e5H0bxXQQko3d0fahijL41eaynuS6bBtNSJ-F45Gr-6d-gp92Z_luBsd-iiLfvVbmkO_-A1jCTNb8",
-                
-                "Test Image Recommended Product 1": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTK9M5qPZgJbVCpaNW1mcnm8XSNAZ0e5H0bxXQQko3d0fahijL41eaynuS6bBtNSJ-F45Gr-6d-gp92Z_luBsd-iiLfvVbmkO_-A1jCTNb8",
-                "Test Image Recommended Product 2": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTK9M5qPZgJbVCpaNW1mcnm8XSNAZ0e5H0bxXQQko3d0fahijL41eaynuS6bBtNSJ-F45Gr-6d-gp92Z_luBsd-iiLfvVbmkO_-A1jCTNb8",
-                "Test Image Recommended Product 3": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTK9M5qPZgJbVCpaNW1mcnm8XSNAZ0e5H0bxXQQko3d0fahijL41eaynuS6bBtNSJ-F45Gr-6d-gp92Z_luBsd-iiLfvVbmkO_-A1jCTNb8",
-                "Test Image Recommended Product 4": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTK9M5qPZgJbVCpaNW1mcnm8XSNAZ0e5H0bxXQQko3d0fahijL41eaynuS6bBtNSJ-F45Gr-6d-gp92Z_luBsd-iiLfvVbmkO_-A1jCTNb8",
-                
-                "Test Image Product 1": "",
-                "Test Image Product 2": "",
-                "Test Image Product 3": "",
-                "Test Image Product 4": "",
-                "Test Image Product 5": "",
-                "Test Image Product 6": "",
-
-            ])
-        
-        
-        
-        
         CleverTap.sharedInstance()?.syncVariables();
 
     }
@@ -142,14 +91,30 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
     
     
     
-    @IBOutlet weak var myCollectionView: UICollectionView!
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        applyCurrentTheme()
+
+
+        // Listen for theme changes
+        NotificationCenter.default.addObserver(self,
+                                            selector: #selector(themeDidChange),
+                                            name: .themeDidChange,
+                                            object: nil)
+             
+
+        
         CleverTap.sharedInstance()?.fetchVariables({ success in
               print(success)
             }
             )
+        
+      
 
         // Load last selected category
         if let lastSelected = UserDefaults.standard.string(forKey: "lastSelectedCategory") {
@@ -165,13 +130,36 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
             }
         }
     }
-
-
-//
-//    @IBAction func OnUserLogin(_ sender: Any) {
-//   
-//    }
     
+    
+    @IBAction func Theme(_ sender: Any) {
+        ThemeManager.shared.toggleTheme()
+            applyCurrentTheme()
+            
+            if ThemeManager.shared.isChristmasThemeApplied {
+                print("🎄 Christmas Theme Applied!")
+            } else {
+                print("⬅️ Reverted to Default Theme")
+            }
+    }
+
+    @objc func themeDidChange() {
+           applyCurrentTheme()
+       }
+       
+       func applyCurrentTheme() {
+           ThemeManager.shared.applyTheme(
+               to: self,
+               collectionView: myCollectionView,
+               themeButton: Theme,
+               loginButton: Login,
+               labels: [Challenges, Categories]
+           )
+       }
+    
+    
+
+
 
 
 
@@ -201,7 +189,7 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
             loadImage(from: beauty["Beauty Recommended Product 1"] as? String, into: RecommendProduct1)
             loadImage(from: beauty["Beauty Recommended Product 2"] as? String, into: RecommendProduct2)
             loadImage(from: beauty["Beauty Recommended Product 3"] as? String, into: RecommendProduct3)
-            loadImage(from: beauty["Beauty Recommended Product 4"] as? String, into: RecommendProduct4)
+//            loadImage(from: beauty["Beauty Recommended Product 4"] as? String, into: RecommendProduct4)
             
             bannerImageUrls = [
                 beauty["Beauty Banner Image 1"] as? String,
@@ -226,7 +214,7 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
             loadImage(from: sports["Sports Recommended Product 1"] as? String, into: RecommendProduct1)
             loadImage(from: sports["Sports Recommended Product 2"] as? String, into: RecommendProduct2)
             loadImage(from: sports["Sports Recommended Product 3"] as? String, into: RecommendProduct3)
-            loadImage(from: sports["Sports Recommended Product 4"] as? String, into: RecommendProduct4)
+//            loadImage(from: sports["Sports Recommended Product 4"] as? String, into: RecommendProduct4)
 
             bannerImageUrls = [
                 sports["Sports Banner Image 1"] as? String,
@@ -251,7 +239,7 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
             loadImage(from: clothes["Clothes Recommended Product 1"] as? String, into: RecommendProduct1)
             loadImage(from: clothes["Clothes Recommended Product 2"] as? String, into: RecommendProduct2)
             loadImage(from: clothes["Clothes Recommended Product 3"] as? String, into: RecommendProduct3)
-            loadImage(from: clothes["Clothes Recommended Product 4"] as? String, into: RecommendProduct4)
+//            loadImage(from: clothes["Clothes Recommended Product 4"] as? String, into: RecommendProduct4)
             
             bannerImageUrls = [
                 clothes["Clothes Banner Image 1"] as? String,
@@ -269,16 +257,28 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
         }
     }
 
-    @IBOutlet weak var RecommendProduct1: UIImageView!
-    
-    @IBOutlet weak var RecommendProduct2: UIImageView!
-    
-    @IBOutlet weak var RecommendProduct3: UIImageView!
-    
-    @IBOutlet weak var RecommendProduct4: UIImageView!
-    
 }
+extension UIColor {
+    convenience init?(hex: String) {
+        var hexString = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
 
+        if hexString.hasPrefix("#") {
+            hexString.removeFirst()
+        }
+
+        guard hexString.count == 6 else { return nil }
+
+        var rgbValue: UInt64 = 0
+        Scanner(string: hexString).scanHexInt64(&rgbValue)
+
+        self.init(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: 1.0
+        )
+    }
+}
 
 
 func loadImage(from urlString: String?, into imageView: UIImageView) {
@@ -294,3 +294,13 @@ func loadImage(from urlString: String?, into imageView: UIImageView) {
         }
     }.resume()
 }
+
+
+extension UIButton {
+    func applyPlainStyle() {
+        self.configuration = nil // removes Apple's default style
+        self.layer.cornerRadius = 10
+        self.clipsToBounds = true
+    }
+}
+

@@ -143,64 +143,29 @@ class TrueMoneyViewController:UIViewController,UICollectionViewDataSource, UICol
         
         // Save updated value for next time
         UserDefaults.standard.set(nextValue, forKey: "contentCounter")
+        applyCurrentTheme()
+              
+              NotificationCenter.default.addObserver(self,
+                                                   selector: #selector(themeDidChange),
+                                                   name: .themeDidChange,
+                                                   object: nil)
         
-        // Send event to CleverTap
-//        let props = [
-//            "Content": nextValue
-//        ] as [String : Any]
-//
-//        CleverTap.sharedInstance()?.recordEvent("Native Display", withProps: props)
-        
-        
-//        CleverTap.sharedInstance()?.fetchVariables({ success in
-//            print(":white_tick: Variables fetched: \(success)")
-//            if nextValue == 1 {
-//                if let sports = CleverTap.sharedInstance()?.getVariableValue("Sports") as? [String: Any] {
-//                    self.bannerImageUrls = [
-//                        sports["Sports Banner Image 1"] as? String,
-//                        sports["Sports Banner Image 2"] as? String,
-//                        sports["Sports Banner Image 3"] as? String
-//                    ].compactMap { $0 }
-//                    
-////                    print("sports", bannerImageUrls)
-//
-//
-//                    self.CollectionView.reloadData()
-//                    self.startCarouselTimer()
-//                }
-//            } else if nextValue == 2 {
-//                if let clothes = CleverTap.sharedInstance()?.getVariableValue("Clothes") as? [String: Any] {
-//                    self.bannerImageUrls = [
-//                        clothes["Clothes Banner Image 1"] as? String,
-//                        clothes["Clothes Banner Image 2"] as? String,
-//                        clothes["Clothes Banner Image 3"] as? String
-//                    ].compactMap { $0 }
-//
-////                    print("clothes", bannerImageUrls)
-//
-//                    
-//                    self.CollectionView.reloadData()
-//                    self.startCarouselTimer()
-//                }
-//            } else {
-//                if let beauty = CleverTap.sharedInstance()?.getVariableValue("Beauty") as? [String: Any] {
-//
-//                    self.bannerImageUrls = [
-//                        beauty["Beauty Banner Image 1"] as? String,
-//                        beauty["Beauty Banner Image 2"] as? String,
-//                        beauty["Beauty Banner Image 3"] as? String
-//                    ].compactMap { $0 }
-//
-////                    print("beauty", bannerImageUrls)
-//
-//                    self.CollectionView.reloadData()
-//                    
-//                    self.startCarouselTimer()
-//                    UserDefaults.standard.set("Beauty", forKey: "lastSelectedCategory")
-//                }
-//            }
-//
-//        })
+      
     }
+    @objc func themeDidChange() {
+         applyCurrentTheme()
+     }
+     
+     func applyCurrentTheme() {
+         ThemeManager.shared.applyTheme(
+             to: self,
+//             themeButton: someButton,
+//             labels: [someLabel]
+         )
+     }
+     
+     deinit {
+         NotificationCenter.default.removeObserver(self)
+     }
 
 }
