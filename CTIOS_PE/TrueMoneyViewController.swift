@@ -61,12 +61,6 @@ class TrueMoneyViewController:UIViewController,UICollectionViewDataSource, UICol
         UserDefaults.standard.set(nextValue, forKey: "contentCounter")
  
 
-//        applyCurrentTheme()
-              
-        NotificationCenter.default.addObserver(self,
-                                            selector: #selector(themeDidChange),
-                                            name: .themeDidChange,
-                                            object: nil)
     
     }
     
@@ -250,98 +244,168 @@ class TrueMoneyViewController:UIViewController,UICollectionViewDataSource, UICol
 
       
       // MARK: - FIRST Row Icons
-      func setupIconRowUI() {
-          let iconNames = ["doc.text", "shield", "bolt.fill", "creditcard"]
-          let titles = ["Bills", "Insurance", "Electricity", "Prepaid"]
+    func setupIconRowUI() {
+        let iconNames = ["doc.text", "shield", "bolt.fill", "creditcard"]
+        let titles = ["Bills", "Insurance", "Electricity", "Prepaid"]
 
-          let stack = makeIconRow(iconNames: iconNames, titles: titles)
-          
-          view.addSubview(stack)
+        let stack = makeIconRow(iconNames: iconNames, titles: titles, tagOffset: 0) // Tags: 0-3
+        
+        view.addSubview(stack)
 
-          NSLayoutConstraint.activate([
-              stack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 220),
-              stack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-              stack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-              stack.heightAnchor.constraint(equalToConstant: 100)
-          ])
+        NSLayoutConstraint.activate([
+            stack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 220),
+            stack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            stack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            stack.heightAnchor.constraint(equalToConstant: 100)
+        ])
 
-          firstIconRow = stack
-      }
+        firstIconRow = stack
+    }
       
       // MARK: - SECOND Row Icons
-      func setupSecondIconRowUI() {
-          let iconNames = ["wallet.pass", "house.fill", "gift.fill", "phone.fill"]
-          let titles = ["Wallet", "Home", "Rewards", "Mobile"]
+        func setupSecondIconRowUI() {
+            let iconNames = ["wallet.pass", "house.fill", "gift.fill", "phone.fill"]
+            let titles = ["Wallet", "Home", "Rewards", "Mobile"]
 
-          let stack = makeIconRow(iconNames: iconNames, titles: titles)
+            let stack = makeIconRow(iconNames: iconNames, titles: titles, tagOffset: 4) // Tags: 4-7 ⭐
+            
+            view.addSubview(stack)
 
-          view.addSubview(stack)
-
-          NSLayoutConstraint.activate([
-              stack.topAnchor.constraint(equalTo: firstIconRow.bottomAnchor, constant: 20),
-              stack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-              stack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-              stack.heightAnchor.constraint(equalToConstant: 100)
-          ])
-          
-          secondIconRow = stack
-      }
+            NSLayoutConstraint.activate([
+                stack.topAnchor.constraint(equalTo: firstIconRow.bottomAnchor, constant: 20),
+                stack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+                stack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+                stack.heightAnchor.constraint(equalToConstant: 100)
+            ])
+            
+            secondIconRow = stack
+        }
 
       // MARK: - Reusable Icon Creator
-      func makeIconView(icon: String, title: String) -> UIView {
-          let container = UIStackView()
-          container.axis = .vertical
-          container.alignment = .center
-          container.spacing = 8
+    func makeIconView(icon: String, title: String, tag: Int) -> UIButton {
+        let button = UIButton(type: .system)
+        button.tag = tag
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.tintColor = .clear
 
-          let bgCircle = UIView()
-          bgCircle.backgroundColor = .white
-          bgCircle.layer.cornerRadius = 30
-          bgCircle.layer.shadowOpacity = 0.12
-          bgCircle.layer.shadowRadius = 6
-          bgCircle.layer.shadowOffset = CGSize(width: 0, height: 4)
-          bgCircle.translatesAutoresizingMaskIntoConstraints = false
-          bgCircle.widthAnchor.constraint(equalToConstant: 60).isActive = true
-          bgCircle.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        // ---- Container Stack ----
+        let container = UIStackView()
+        container.axis = .vertical
+        container.alignment = .center
+        container.spacing = 8
+        container.translatesAutoresizingMaskIntoConstraints = false
+        container.isUserInteractionEnabled = false // ⭐ ADD THIS LINE
 
-          let img = UIImageView(image: UIImage(systemName: icon))
-          img.tintColor = UIColor(red: 70/255, green: 120/255, blue: 255/255, alpha: 1)
-          img.contentMode = .scaleAspectFit
-          img.translatesAutoresizingMaskIntoConstraints = false
+        // ---- Circle BG ----
+        let bgCircle = UIView()
+        bgCircle.backgroundColor = .white
+        bgCircle.layer.cornerRadius = 30
+        bgCircle.layer.shadowColor = UIColor.black.cgColor // Add this too
+        bgCircle.layer.shadowOpacity = 0.12
+        bgCircle.layer.shadowRadius = 6
+        bgCircle.layer.shadowOffset = CGSize(width: 0, height: 4)
+        bgCircle.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            bgCircle.widthAnchor.constraint(equalToConstant: 60),
+            bgCircle.heightAnchor.constraint(equalToConstant: 60)
+        ])
 
-          bgCircle.addSubview(img)
-          
-          NSLayoutConstraint.activate([
-              img.centerXAnchor.constraint(equalTo: bgCircle.centerXAnchor),
-              img.centerYAnchor.constraint(equalTo: bgCircle.centerYAnchor),
-              img.widthAnchor.constraint(equalToConstant: 28),
-              img.heightAnchor.constraint(equalToConstant: 28)
-          ])
+        // ---- Icon ----
+        let img = UIImageView(image: UIImage(systemName: icon))
+        img.tintColor = UIColor(red: 70/255, green: 120/255, blue: 255/255, alpha: 1)
+        img.contentMode = .scaleAspectFit
+        img.translatesAutoresizingMaskIntoConstraints = false
 
-          let label = UILabel()
-          label.text = title
-          label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-          label.textColor = .darkGray
+        bgCircle.addSubview(img)
+        NSLayoutConstraint.activate([
+            img.centerXAnchor.constraint(equalTo: bgCircle.centerXAnchor),
+            img.centerYAnchor.constraint(equalTo: bgCircle.centerYAnchor),
+            img.widthAnchor.constraint(equalToConstant: 28),
+            img.heightAnchor.constraint(equalToConstant: 28)
+        ])
 
-          container.addArrangedSubview(bgCircle)
-          container.addArrangedSubview(label)
+        // ---- Label ----
+        let label = UILabel()
+        label.text = title
+        label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+        label.textColor = .darkGray
+        label.textAlignment = .center
 
-          return container
-      }
+        // stack views
+        container.addArrangedSubview(bgCircle)
+        container.addArrangedSubview(label)
+
+        // assign to button
+        button.addSubview(container)
+        
+        NSLayoutConstraint.activate([
+            container.topAnchor.constraint(equalTo: button.topAnchor),
+            container.bottomAnchor.constraint(equalTo: button.bottomAnchor),
+            container.leadingAnchor.constraint(equalTo: button.leadingAnchor),
+            container.trailingAnchor.constraint(equalTo: button.trailingAnchor)
+        ])
+
+        // Animations and tap
+        button.addTarget(self, action: #selector(animateButtonDown(_:)), for: .touchDown)
+        button.addTarget(self, action: #selector(animateButtonUp(_:)), for: [.touchUpInside, .touchUpOutside, .touchCancel])
+        button.addTarget(self, action: #selector(iconTapped(_:)), for: .touchUpInside)
+
+        return button
+    }
+    
+    
+    @objc func animateButtonDown(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.15) {
+            sender.transform = CGAffineTransform(scaleX: 0.92, y: 0.92)
+        }
+    }
+
+    @objc func animateButtonUp(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.15) {
+            sender.transform = .identity
+        }
+    }
+    
+    @objc func iconTapped(_ sender: UIButton) {
+        // Add haptic feedback
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
+        
+        switch sender.tag {
+        // First Row
+        case 0: print("✅ Bills tapped")
+        case 1: print("✅ Insurance tapped")
+        case 2: print("✅ Electricity tapped")
+        case 3: print("✅ Prepaid tapped")
+        
+        // Second Row
+        case 4: print("✅ Wallet tapped")
+        case 5: print("✅ Home tapped")
+        case 6: print("✅ Rewards tapped")
+        case 7: print("✅ Mobile tapped")
+        
+        default: break
+        }
+    }
+    
+
+
       
-      func makeIconRow(iconNames: [String], titles: [String]) -> UIStackView {
-          let stack = UIStackView()
-          stack.axis = .horizontal
-          stack.distribution = .fillEqually
-          stack.alignment = .center
-          stack.spacing = 24
-          stack.translatesAutoresizingMaskIntoConstraints = false
-          
-          for i in 0..<iconNames.count {
-              stack.addArrangedSubview(makeIconView(icon: iconNames[i], title: titles[i]))
-          }
-          return stack
-      }
+    func makeIconRow(iconNames: [String], titles: [String], tagOffset: Int = 0) -> UIStackView {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.distribution = .fillEqually
+        stack.alignment = .center
+        stack.spacing = 24
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        
+        for i in 0..<iconNames.count {
+            stack.addArrangedSubview(makeIconView(icon: iconNames[i], title: titles[i], tag: i + tagOffset))
+        }
+        return stack
+    }
+    
       
       // MARK: - Place Carousel
       func setupCarouselConstraints() {
@@ -399,22 +463,4 @@ class TrueMoneyViewController:UIViewController,UICollectionViewDataSource, UICol
         }
     }
     
-    
-    
-    @objc func themeDidChange() {
-         applyCurrentTheme()
-     }
-     
-     func applyCurrentTheme() {
-         ThemeManager.shared.applyTheme(
-             to: self,
-             themeButton: PayNow,
-             labels: [bills_label,Prepaid_label,Electricity_label,Insaurance_label]
-         )
-     }
-     
-     deinit {
-         NotificationCenter.default.removeObserver(self)
-     }
-
 }
