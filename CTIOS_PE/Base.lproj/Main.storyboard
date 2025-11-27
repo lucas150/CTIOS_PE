@@ -607,7 +607,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R3S-hQ-IEr">
-                                <rect key="frame" x="16" y="729" width="361" height="41"/>
+                                <rect key="frame" x="16" y="774" width="361" height="41"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Pay Now">
@@ -618,11 +618,11 @@
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="AIA_Banner" translatesAutoresizingMaskIntoConstraints="NO" id="jXB-k9-51K">
-                                <rect key="frame" x="77" y="56" width="204" height="44"/>
+                                <rect key="frame" x="94" y="58" width="204" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gTP-ks-1pV">
-                                <rect key="frame" x="15" y="519" width="362" height="202"/>
+                                <rect key="frame" x="16" y="549" width="362" height="202"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="XZu-xw-bxz">
@@ -662,46 +662,6 @@
                                     <outlet property="delegate" destination="hB3-Kj-YdM" id="7Nv-c6-kTj"/>
                                 </connections>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wVs-KQ-eKs">
-                                <rect key="frame" x="26" y="331" width="67" height="70"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="click1"/>
-                                <connections>
-                                    <action selector="click1:" destination="hB3-Kj-YdM" eventType="touchUpInside" id="SHK-rD-Zg9"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hhS-7c-iL3">
-                                <rect key="frame" x="113" y="329" width="69" height="74"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="click2"/>
-                                <connections>
-                                    <action selector="click2:" destination="hB3-Kj-YdM" eventType="touchUpInside" id="JZ8-c7-UE8"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8op-Uj-uTn">
-                                <rect key="frame" x="215" y="331" width="69" height="74"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="click3"/>
-                                <connections>
-                                    <action selector="click3:" destination="hB3-Kj-YdM" eventType="touchUpInside" id="zEb-bH-QKc"/>
-                                </connections>
-                            </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="homescreen" translatesAutoresizingMaskIntoConstraints="NO" id="w7Q-bq-coz">
-                                <rect key="frame" x="0.0" y="108" width="393" height="423"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hss-GF-uox">
-                                <rect key="frame" x="300" y="329" width="69" height="74"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="click4"/>
-                                <connections>
-                                    <action selector="click4:" destination="hB3-Kj-YdM" eventType="touchUpInside" id="gwI-f8-nEp"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="4M1-93-tH6"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -713,11 +673,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="CollectionView" destination="gTP-ks-1pV" id="AS3-v0-pEA"/>
-                        <outlet property="TrueMoneyImageView" destination="w7Q-bq-coz" id="Y4T-bK-VNj"/>
-                        <outlet property="click1" destination="wVs-KQ-eKs" id="dL1-TI-nvM"/>
-                        <outlet property="click2" destination="hhS-7c-iL3" id="xGV-zh-vY7"/>
-                        <outlet property="click3" destination="8op-Uj-uTn" id="xIA-Bh-7Xa"/>
-                        <outlet property="click4" destination="Hss-GF-uox" id="Q7U-AD-RKG"/>
+                        <outlet property="PayNow" destination="R3S-hQ-IEr" id="c4k-d7-rqJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ekq-oH-Tyw" sceneMemberID="firstResponder"/>
@@ -740,7 +696,6 @@
         <image name="comedy3" width="1400" height="2074"/>
         <image name="comedy4" width="540" height="800"/>
         <image name="comedy5" width="188" height="268"/>
-        <image name="homescreen" width="1024" height="1349"/>
         <image name="k1" width="735" height="1048"/>
         <image name="k2" width="236" height="352"/>
         <image name="k3" width="1000" height="1433"/>
