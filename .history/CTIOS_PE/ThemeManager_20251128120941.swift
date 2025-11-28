@@ -12,9 +12,8 @@ class ThemeManager {
     private(set) var isChristmasThemeApplied = false
     
     // Default elements
-    
     private var backgroundColorHex: String?
-    private var SecondaryBackgroundColor: String?
+    private var buttonBackgroundColorHex: String?
     private var buttonTextColorHex: String?
     // TRUE MONEY Customizable Elements
     var headerGradientTopHex: String?
@@ -23,9 +22,7 @@ class ThemeManager {
     var cardGradientBottomHex: String?
     var iconTintHex: String?
     var viewBackgroundHex: String? = "#FFFFFF"   // main view background
-    var appBackgroundHex: String? = "#FFFFFF"
-    // scroll / container view bg
-
+    var appBackgroundHex: String? = "#FFFFFF"    // scroll / container view bg
 
 
     private init() {
@@ -39,28 +36,29 @@ class ThemeManager {
         // ⚠️ KEEP DEFAULT COLORS FROM CLEVERTAP IF AVAILABLE
         if let Christmas_Theme = CleverTap.sharedInstance()?.getVariableValue("Christmas Theme") as? [String: Any] {
             
-            backgroundColorHex = Christmas_Theme["PrimaryBackgroundColor"] as? String
-            SecondaryBackgroundColor = Christmas_Theme["SecondaryBackgroundColor"] as? String
-
-            
-
-//            buttonBackgroundColorHex = Christmas_Theme["backgroundColorHex 2"] as? String
+            backgroundColorHex = "#ffefea"
+            buttonBackgroundColorHex = Christmas_Theme["backgroundColorHex 2"] as? String
             buttonTextColorHex = Christmas_Theme["buttonTextColorHex 3"] as? String
-            
-            // Header gradient → red shades
-            headerGradientTopHex = Christmas_Theme["headerGradientTopHex"] as? String
-            headerGradientBottomHex = Christmas_Theme["headerGradientTopHex"] as? String
-            
-            // Card gradient → soft red
-            cardGradientTopHex = Christmas_Theme["cardGradientTopHex"] as? String
-            cardGradientBottomHex = Christmas_Theme["cardGradientBottomHex"] as? String
-
-            // Icon tint → strong red
-            iconTintHex = Christmas_Theme["iconTintHex"] as? String
-
-
         }
+        
+        // 🎄 --- HARDCODED RED THEME --- 🎄
 
+        // Header gradient → red shades
+        headerGradientTopHex = "#900000"
+        headerGradientBottomHex = "#B8001F"
+
+        // Card gradient → soft red
+        cardGradientTopHex = "#e20000"
+        cardGradientBottomHex = "#ff5b5b"
+
+        // Icon tint → strong red
+        iconTintHex = "#ff5b5b"
+
+        // Button fallback colors (in case CleverTap didn't give)
+        if buttonBackgroundColorHex == nil { buttonBackgroundColorHex = "#D7263D" }
+        if buttonTextColorHex == nil { buttonTextColorHex = "#FFFFFF" }
+
+        print("🎄 Hardcoded Christmas Theme Loaded")
     }
     
     
@@ -112,6 +110,7 @@ class ThemeManager {
                 }
 
                 // ===== Background =====
+
                 if let bgHex = self.backgroundColorHex {
                     viewController.view.backgroundColor = UIColor(hex: bgHex)
                     collectionView?.backgroundColor = UIColor(hex: bgHex)
@@ -126,12 +125,15 @@ class ThemeManager {
                     themeButton?.backgroundColor = bgColor
                     themeButton?.setTitleColor(textColor, for: .normal)
                 }
-                
-                // Optional: Login button styling
-                if let login = loginButton {
-                    login.backgroundColor = .white
-                    login.setTitleColor(.red, for: .normal)
-                }
+////
+//                // Optional: Login button styling
+//                if let login = loginButton {
+//                    var loginConfig = UIButton.Configuration.filled()
+//                    loginConfig.baseBackgroundColor = .white
+//                    loginConfig.baseForegroundColor = .red
+//                    loginConfig.cornerStyle = .large
+//                    login.configuration = loginConfig
+//                }
 
             }
 

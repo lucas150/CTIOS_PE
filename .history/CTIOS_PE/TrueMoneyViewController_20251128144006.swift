@@ -416,20 +416,88 @@ class TrueMoneyViewController:UIViewController,UICollectionViewDataSource, UICol
 
       
     // MARK: - Icon Row Generator (Themed)
-    func makeIconRow(iconNames: [String], titles: [String], tagOffset: Int = 0) -> UIStackView {
-            let stack = UIStackView()
-            stack.axis = .horizontal
-            stack.distribution = .fillEqually
-            stack.alignment = .center
-            stack.spacing = 24
-            stack.translatesAutoresizingMaskIntoConstraints = false
-            
-            for i in 0..<iconNames.count {
-                stack.addArrangedSubview(makeIconView(icon: iconNames[i], title: titles[i], tag: i + tagOffset))
-            }
-            return stack
+    func makeIconRow(iconNames: [String], titles: [String], tagOffset: Int) -> UIStackView {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.distribution = .fillEqually
+        stack.alignment = .center
+        stack.spacing = 20
+        stack.translatesAutoresizingMaskIntoConstraints = false
+
+        // Get Theme Colors
+        let themeTint = ThemeManager.shared.iconTintHex.flatMap { UIColor(hex: $0) } ?? .systemPink
+        let themeBg = ThemeManager.shared.iconBackgroundHex.flatMap { UIColor(hex: $0) } ?? .systemGray5
+        let themeText = ThemeManager.shared.textColorHex.flatMap { UIColor(hex: $0) } ?? .darkGray
+
+        for (index, iconName) in iconNames.enumerated() {
+            let vStack = UIStackView()
+            vStack.axis = .vertical
+            vStack.alignment = .center
+            vStack.spacing = 8
+
+            // Circle Frame
+            let circleView = UIView()
+            circleView.translatesAutoresizingMaskIntoConstraints = false
+            circleView.backgroundColor = themeBg
+            circleView.layer.cornerRadius = 35
+
+            NSLayoutConstraint.activate([
+                circleView.widthAnchor.constraint(equalToConstant: 70),
+                circleView.heightAnchor.constraint(equalToConstant: 70)
+            ])
+
+            // Icon
+            let icon = UIImageView(image: UIImage(systemName: iconName))
+            icon.tintColor = themeTint
+            icon.contentMode = .scaleAspectFit
+            icon.translatesAutoresizingMaskIntoConstraints = false
+
+            NSLayoutConstraint.activate([
+                icon.widthAnchor.constraint(equalToConstant: 30),
+                icon.heightAnchor.constraint(equalToConstant: 30)
+            ])
+
+            circleView.addSubview(icon)
+            NSLayoutConstraint.activate([
+                icon.centerXAnchor.constraint(equalTo: circleView.centerXAnchor),
+                icon.centerYAnchor.constraint(equalTo: circleView.centerYAnchor)
+            ])
+
+            // Label
+            let label = UILabel()
+            label.text = titles[index]
+            label.textAlignment = .center
+            label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+            label.textColor = themeText
+
+            // Tap Gesture
+            circleView.tag = index + tagOffset
+            circleView.isUserInteractionEnabled = true
+            circleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(iconTapped(_:))))
+
+            vStack.addArrangedSubview(circleView)
+            vStack.addArrangedSubview(label)
+            stack.addArrangedSubview(vStack)
         }
 
+        return stack
+    }
+    
+    
+//    // MARK: - Actions
+//       @objc func iconTapped(_ sender: UITapGestureRecognizer) {
+//           guard let tag = sender.view?.tag else { return }
+//           print("Icon tapped at index: \(tag)")
+//       }
+//
+//    
+    
+    @objc func reloadThemedUI() {
+        UIView.transition(with: view, duration: 0.35, options: .transitionCrossDissolve) {
+            self.firstIconRow?.removeFromSuperview()
+            self.setupIconRowUI()
+        }
+    }
 
 
       
@@ -522,6 +590,23 @@ class TrueMoneyViewController:UIViewController,UICollectionViewDataSource, UICol
         updateRow(secondIconRow)
     }
 
+    func updateIconBackground(color: UIColor) {
+        func updateRow(_ row: UIStackView) {
+            for view in row.arrangedSubviews {
+                guard let button = view as? UIButton else { continue }
+                
+                // Find the circular background views in the button
+                let circleViews = button.recursiveViews().filter { view in
+                    view.layer.cornerRadius > 0 && view != button
+                }
+                circleViews.forEach { $0.backgroundColor = color }
+            }
+        }
+        
+        updateRow(firstIconRow)
+        updateRow(secondIconRow)
+    }
+
 
     
     func applyHeaderGradient(topColor: UIColor, bottomColor: UIColor) {
@@ -571,13 +656,5 @@ extension UIView {
     }
 }
 
-extension UIView {
-    // Returns self and all descendant subviews in a flat array
-    func recursiveViews() -> [UIView] {
-        var all: [UIView] = [self]
-        for sub in subviews {
-            all.append(contentsOf: sub.recursiveViews())
-        }
-        return all
-    }
-}
+
+

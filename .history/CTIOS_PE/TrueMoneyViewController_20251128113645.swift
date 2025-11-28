@@ -30,7 +30,10 @@ class TrueMoneyViewController:UIViewController,UICollectionViewDataSource, UICol
     var currentCarouselIndex = 0
     
     var bannerImageUrls: [String] = [
-        ]// Empty
+            "https://cdn.prod.website-files.com/5ee6fcad61bab357cf10c8fa/685387f2e3ed105bfe562c88_TrueMoneyCashInOut01.jpg",
+            "https://truemoneytransfer.truemoney.com/wp-content/uploads/2023/05/truemoneytransfer-km-home-banner-4-20230530-1100x550_KH.jpeg",
+            "https://pbs.twimg.com/media/EyBKk1TVEAQ9eap?format=jpg&name=4096x4096"
+        ]
     
     
     
@@ -48,8 +51,7 @@ class TrueMoneyViewController:UIViewController,UICollectionViewDataSource, UICol
         
         CollectionView.layer.cornerRadius = 16
         CollectionView.clipsToBounds = true
-        
-        
+
         //theme
         applyCurrentTheme()
         NotificationCenter.default.addObserver(self,
@@ -65,27 +67,10 @@ class TrueMoneyViewController:UIViewController,UICollectionViewDataSource, UICol
         
         // Save updated value for next time
         UserDefaults.standard.set(nextValue, forKey: "contentCounter")
-        
-        
-
-            if let beauty = CleverTap.sharedInstance()?.getVariableValue("Beauty") as? [String: Any] {
-                
-                bannerImageUrls = [
-                    beauty["Beauty Banner Image 1"] as? String,
-                    beauty["Beauty Banner Image 2"] as? String,
-                    beauty["Beauty Banner Image 3"] as? String
-                ].compactMap { $0 }
-                
-                print("beauty", bannerImageUrls)
-                CollectionView.reloadData()
-                startCarouselTimer()
-            }
-        
  
 
     
     }
- 
     
     
     
@@ -154,7 +139,7 @@ class TrueMoneyViewController:UIViewController,UICollectionViewDataSource, UICol
 
          let titleLabel = UILabel()
          titleLabel.text = "AIA"
-         titleLabel.textColor = .white
+//         titleLabel.textColor = .white
          titleLabel.font = UIFont.boldSystemFont(ofSize: 26)
          titleLabel.translatesAutoresizingMaskIntoConstraints = false
 
@@ -415,23 +400,20 @@ class TrueMoneyViewController:UIViewController,UICollectionViewDataSource, UICol
 
 
       
-    // MARK: - Icon Row Generator (Themed)
     func makeIconRow(iconNames: [String], titles: [String], tagOffset: Int = 0) -> UIStackView {
-            let stack = UIStackView()
-            stack.axis = .horizontal
-            stack.distribution = .fillEqually
-            stack.alignment = .center
-            stack.spacing = 24
-            stack.translatesAutoresizingMaskIntoConstraints = false
-            
-            for i in 0..<iconNames.count {
-                stack.addArrangedSubview(makeIconView(icon: iconNames[i], title: titles[i], tag: i + tagOffset))
-            }
-            return stack
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.distribution = .fillEqually
+        stack.alignment = .center
+        stack.spacing = 24
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        
+        for i in 0..<iconNames.count {
+            stack.addArrangedSubview(makeIconView(icon: iconNames[i], title: titles[i], tag: i + tagOffset))
         }
-
-
-
+        return stack
+    }
+    
       
       // MARK: - Place Carousel
       func setupCarouselConstraints() {
@@ -455,6 +437,10 @@ class TrueMoneyViewController:UIViewController,UICollectionViewDataSource, UICol
               PayNow.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
               PayNow.heightAnchor.constraint(equalToConstant: 55)
           ])
+          
+          // Clear button configuration to allow manual styling
+          PayNow.configuration = nil
+          PayNow.layer.cornerRadius = 28
       }
 
     
@@ -571,13 +557,4 @@ extension UIView {
     }
 }
 
-extension UIView {
-    // Returns self and all descendant subviews in a flat array
-    func recursiveViews() -> [UIView] {
-        var all: [UIView] = [self]
-        for sub in subviews {
-            all.append(contentsOf: sub.recursiveViews())
-        }
-        return all
-    }
-}
+

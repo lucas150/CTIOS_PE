@@ -80,22 +80,8 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
         CleverTap.sharedInstance()?.onUserLogin(profile)
         CleverTap.sharedInstance()?.recordEvent("Native Display")
         
-//        let Christmas_Theme = CleverTap.sharedInstance()?.defineVar(name: "Christmas Theme", dictionary: [
-//
-//                "PrimaryBackgroundColor": "#ffefea",
-//                "SecondaryBackgroundColor": "#D7263D",
-//
-//                // Card gradient → soft red
-//                "cardGradientTopHex" : "#e20000",
-//                "cardGradientBottomHex" : "#ff5b5b",
-//                
-//                // Icon tint → strong red
-//                "iconTintHex" : "#ff5b5b"
-
-//            ])
-
-//
-//        CleverTap.sharedInstance()?.syncVariables();
+        
+        CleverTap.sharedInstance()?.syncVariables();
 
     }
     var carouselTimer: Timer?
@@ -113,7 +99,16 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
+        // Set up initial button configuration for Login button
+        var loginConfig = UIButton.Configuration.filled()
+        loginConfig.cornerStyle = .large
+        Login.configuration = loginConfig
+        
+        // Set up initial button configuration for Theme button
+        var themeConfig = UIButton.Configuration.filled()
+        themeConfig.cornerStyle = .large
+        Theme.configuration = themeConfig
+        
         applyCurrentTheme()
 
         // Listen for theme changes
@@ -166,8 +161,8 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
            ThemeManager.shared.applyTheme(
                to: self,
                collectionView: myCollectionView,
-//               themeButton: Theme,
-               themeButton: Login,
+               themeButton: Theme,
+               loginButton: Login,
                labels: [Challenges, Categories]
            )
        }
@@ -271,8 +266,6 @@ class ViewController: UIViewController,UICollectionViewDataSource, UICollectionV
 
         }
     }
-    
-
 
 }
 
@@ -321,6 +314,4 @@ extension UIButton {
         self.clipsToBounds = true
     }
 }
-
-
 

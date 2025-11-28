@@ -25,7 +25,8 @@ class ThemeManager {
     var viewBackgroundHex: String? = "#FFFFFF"   // main view background
     var appBackgroundHex: String? = "#FFFFFF"
     // scroll / container view bg
-
+    var iconBackgroundHex: String?
+    
 
 
     private init() {
@@ -57,7 +58,7 @@ class ThemeManager {
 
             // Icon tint → strong red
             iconTintHex = Christmas_Theme["iconTintHex"] as? String
-
+            iconBackgroundHex = "#3A3A3C"
 
         }
 
@@ -108,13 +109,26 @@ class ThemeManager {
                 if let hex = self.iconTintHex,
                    let tint = UIColor(hex: hex),
                    let vc = viewController as? TrueMoneyViewController {
-                    vc.updateIconTint(color: tint,textColor: tint)
+                    vc.updateIconTint(color: tint, textColor: tint)
+                }
+                
+                // ===== ICON BACKGROUND =====
+                if let iconBgHex = self.iconBackgroundHex,
+                   let iconBgColor = UIColor(hex: iconBgHex),
+                   let vc = viewController as? TrueMoneyViewController {
+                    vc.updateIconBackground(color: iconBgColor)
                 }
 
                 // ===== Background =====
                 if let bgHex = self.backgroundColorHex {
                     viewController.view.backgroundColor = UIColor(hex: bgHex)
                     collectionView?.backgroundColor = UIColor(hex: bgHex)
+                }
+                
+                // ===== LABELS TEXT COLOR =====
+                if let textHex = self.buttonTextColorHex,
+                   let textColor = UIColor(hex: textHex) {
+                    labels.forEach { $0.textColor = textColor }
                 }
                 
                 
@@ -150,6 +164,10 @@ class ThemeManager {
                 // Reset icon tint to BLUE
                 (viewController as? TrueMoneyViewController)?
                     .updateIconTint(color: UIColor(red: 70/255, green: 120/255, blue: 255/255, alpha: 1))
+                
+                // Reset icon background to WHITE
+                (viewController as? TrueMoneyViewController)?
+                    .updateIconBackground(color: .white)
 
                 // Reset buttons
                 themeButton?.backgroundColor = .systemBlue
