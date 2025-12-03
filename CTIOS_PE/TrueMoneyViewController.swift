@@ -497,7 +497,7 @@ class TrueMoneyViewController:UIViewController,UICollectionViewDataSource, UICol
             to: self,
             collectionView: CollectionView,
             themeButton: PayNow,
-            loginButton: nil,
+//            loginButton: nil,
 
         )
     }

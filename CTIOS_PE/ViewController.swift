@@ -8,319 +8,157 @@
 import UIKit
 import CleverTapSDK
 
-class ViewController: UIViewController,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class ViewController: UIViewController {
 
-    @IBOutlet weak var myCollectionView: UICollectionView!
-
-    @IBOutlet weak var Login: UIButton!
-    @IBOutlet weak var alertbutton: UIButton!
-    @IBOutlet weak var RecommendProduct1: UIImageView!
-    @IBOutlet weak var RecommendProduct2: UIImageView!
-    @IBOutlet weak var RecommendProduct3: UIImageView!
-    @IBOutlet weak var Challenges: UILabel!
-    @IBOutlet weak var Categories: UILabel!
-    @IBOutlet weak var Theme: UIButton!
-    var isChristmasThemeApplied = false
-    var currentThemeBackground: UIColor = .white
-//    @IBOutlet weak var Carosel_bg: UIImageView! //new
-    
+    // MARK: - Reusable Components
+    private var headerView: HeaderView!
+    private let carousel = CarouselView()
+    private var challengesSectionView: ThreeImageCardSectionView!
+    private var categoriesSectionView: ThreeImageCardSectionView!
+    let beautyViewController = UIStoryboard(name: "Main", bundle: nil)
+        .instantiateViewController(withIdentifier: "BeautyViewController") as! BeautyViewController
 
 
-
-    
-    
+    // MARK: - Carousel Data
     var bannerImageUrls: [String] = [
-            "https://picsum.photos/400/200?random=1",
-            "https://picsum.photos/400/200?random=2",
-            "https://picsum.photos/400/200?random=3"
-        ]
-
-    
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return bannerImageUrls.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = myCollectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! MyCollectionView
-        loadImage(from: bannerImageUrls[indexPath.item], into: cell.myImageView)
-        return cell
-
-    }
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: myCollectionView.frame.width, height: myCollectionView.frame.height)
-
-    }
-    
-    func startCarouselTimer() {
-        carouselTimer?.invalidate()
-        carouselTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { _ in
-            guard self.bannerImageUrls.count > 1 else { return }
-            self.currentCarouselIndex = (self.currentCarouselIndex + 1) % self.bannerImageUrls.count
-            let indexPath = IndexPath(item: self.currentCarouselIndex, section: 0)
-            self.myCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        }
-    }
-
-
-    
-    
-    
-    @IBAction func OnUserLogin(_ sender: Any) {
-        let profile: Dictionary<String, AnyObject> = [
-            //Update pre-defined profile properties
-            "name": "Aditya Gandhi" as AnyObject,
-            "email": "aditya@gmail.com" as AnyObject,
-            "identity": 77777878 as AnyObject,
-            //Update custom profile properties
-            "Plan type": "Silver" as AnyObject,
-            "Favorite Food": "Pizza" as AnyObject,
-        ]
-
-        CleverTap.sharedInstance()?.onUserLogin(profile)
-        CleverTap.sharedInstance()?.recordEvent("Native Display")
-        
-//        let Christmas_Theme = CleverTap.sharedInstance()?.defineVar(name: "Christmas Theme", dictionary: [
-//
-//                "PrimaryBackgroundColor": "#ffefea",
-//                "SecondaryBackgroundColor": "#D7263D",
-//
-//                // Card gradient → soft red
-//                "cardGradientTopHex" : "#e20000",
-//                "cardGradientBottomHex" : "#ff5b5b",
-//                
-//                // Icon tint → strong red
-//                "iconTintHex" : "#ff5b5b"
-
-//            ])
-
-//
-//        CleverTap.sharedInstance()?.syncVariables();
-
-    }
-    var carouselTimer: Timer?
-    var currentCarouselIndex = 0
-
-    
-    
-    
-    
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-    }
+        "https://picsum.photos/400/200?random=1",
+        "https://picsum.photos/400/200?random=2",
+        "https://picsum.photos/400/200?random=3"
+    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        view.backgroundColor = .systemBackground
+
+        setupHeader()
+        setupCarousel()
+        setupChallengeSection()
+        setupCategoriesSection()
+        setupLoginButton()
         
+    }
 
-        applyCurrentTheme()
+    // MARK: - HEADER
+    func setupHeader() {
+        headerView = HeaderView()
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        headerView.titleText = "AIA"
+        headerView.logo = UIImage(named: "aia_white")
 
-        // Listen for theme changes
-        NotificationCenter.default.addObserver(self,
-                                            selector: #selector(themeDidChange),
-                                            name: .themeDidChange,
-                                            object: nil)
-             
+        view.addSubview(headerView)
 
-        
-        CleverTap.sharedInstance()?.fetchVariables({ success in
-              print(success)
+        NSLayoutConstraint.activate([
+            headerView.topAnchor.constraint(equalTo: view.topAnchor),
+            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            headerView.heightAnchor.constraint(equalToConstant: 180)
+        ])
+
+        headerView.applyTheme(ThemeManager.shared.currentTheme)
+    }
+
+    // MARK: - CAROUSEL
+    func setupCarousel() {
+        carousel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(carousel)
+
+        NSLayoutConstraint.activate([
+            carousel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            carousel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            carousel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            carousel.heightAnchor.constraint(equalToConstant: 220)
+        ])
+
+        carousel.items = bannerImageUrls.map { .url($0) }
+        carousel.autoScrollInterval = 3
+        carousel.startAutoScroll()
+    }
+
+    // MARK: - CHALLENGES SECTION
+    func setupChallengeSection() {
+        challengesSectionView = ThreeImageCardSectionView(
+            title: "Challenges",
+            items: [
+                .init(imageName: "aia_challeng_1", title: "Run 5km", url: nil),
+                .init(imageName: "aia_challeng_2", title: "Yoga", url: nil),
+                .init(imageName: "aia_challeng_3", title: "Meditate", url: nil)
+            ],
+            onSelect: { index, item in
+                print("Selected Challenge:", item.title)
             }
-            )
-        
-      
-
-        // Load last selected category
-        if let lastSelected = UserDefaults.standard.string(forKey: "lastSelectedCategory") {
-            switch lastSelected {
-            case "Beauty":
-                Beauty(self)
-            case "Sports":
-                Sports(self)
-            case "Clothes":
-                Clothes(self)
-            default:
-                break
-            }
-        }
-    }
-    
-    
-    @IBAction func Theme(_ sender: Any) {
-        ThemeManager.shared.toggleTheme()
-            applyCurrentTheme()
-            
-            if ThemeManager.shared.isChristmasThemeApplied {
-                print("🎄 Christmas Theme Applied!")
-            } else {
-                print("⬅️ Reverted to Default Theme")
-            }
-    }
-
-    @objc func themeDidChange() {
-           applyCurrentTheme()
-       }
-       
-       func applyCurrentTheme() {
-           ThemeManager.shared.applyTheme(
-               to: self,
-               collectionView: myCollectionView,
-//               themeButton: Theme,
-               themeButton: Login,
-               labels: [Challenges, Categories]
-           )
-       }
-    
-    
-
-
-
-
-
-    @IBAction func Alert(_ sender: Any) {
-        if let clothes = CleverTap.sharedInstance()?.getVariableValue("Clothes") as? [String: Any] {
-            let jsonData = try? JSONSerialization.data(withJSONObject: clothes, options: .prettyPrinted)
-            let jsonString = String(data: jsonData!, encoding: .utf8) ?? "Failed to stringify JSON"
-
-            let alertController = UIAlertController(title: "Fetched Variable", message: jsonString, preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-
-            self.present(alertController, animated: true, completion: nil)
-        } else {
-            let alertController = UIAlertController(title: "Error", message: "Could not fetch variable value", preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-
-            self.present(alertController, animated: true, completion: nil)
-        }
-
-    }
-    
-
-    @IBAction func Beauty(_ sender: Any) {
-        if let beauty = CleverTap.sharedInstance()?.getVariableValue("Beauty") as? [String: Any] {
-            
-            // Recommended Product 1 - 4
-            loadImage(from: beauty["Beauty Recommended Product 1"] as? String, into: RecommendProduct1)
-            loadImage(from: beauty["Beauty Recommended Product 2"] as? String, into: RecommendProduct2)
-            loadImage(from: beauty["Beauty Recommended Product 3"] as? String, into: RecommendProduct3)
-//            loadImage(from: beauty["Beauty Recommended Product 4"] as? String, into: RecommendProduct4)
-            
-            bannerImageUrls = [
-                beauty["Beauty Banner Image 1"] as? String,
-                beauty["Beauty Banner Image 2"] as? String,
-                beauty["Beauty Banner Image 3"] as? String
-            ].compactMap { $0 }
-            
-            print("beauty", bannerImageUrls)
-
-            myCollectionView.reloadData()
-            startCarouselTimer()
-            UserDefaults.standard.set("Beauty", forKey: "lastSelectedCategory")
-
-        }
-    }
-
-    
-    @IBAction func Sports(_ sender: Any) {
-        if let sports = CleverTap.sharedInstance()?.getVariableValue("Sports") as? [String: Any] {
-            
-            // Recommended Product 1 - 4
-            loadImage(from: sports["Sports Recommended Product 1"] as? String, into: RecommendProduct1)
-            loadImage(from: sports["Sports Recommended Product 2"] as? String, into: RecommendProduct2)
-            loadImage(from: sports["Sports Recommended Product 3"] as? String, into: RecommendProduct3)
-//            loadImage(from: sports["Sports Recommended Product 4"] as? String, into: RecommendProduct4)
-
-            bannerImageUrls = [
-                sports["Sports Banner Image 1"] as? String,
-                sports["Sports Banner Image 2"] as? String,
-                sports["Sports Banner Image 3"] as? String
-            ].compactMap { $0 }
-            
-            print("sports", bannerImageUrls)
-
-
-            myCollectionView.reloadData()
-            startCarouselTimer()
-            UserDefaults.standard.set("Sports", forKey: "lastSelectedCategory")
-
-        }
-    }
-
-    @IBAction func Clothes(_ sender: Any) {
-        if let clothes = CleverTap.sharedInstance()?.getVariableValue("Clothes") as? [String: Any] {
-            
-            // Recommended Product 1 - 4
-            loadImage(from: clothes["Clothes Recommended Product 1"] as? String, into: RecommendProduct1)
-            loadImage(from: clothes["Clothes Recommended Product 2"] as? String, into: RecommendProduct2)
-            loadImage(from: clothes["Clothes Recommended Product 3"] as? String, into: RecommendProduct3)
-//            loadImage(from: clothes["Clothes Recommended Product 4"] as? String, into: RecommendProduct4)
-            
-            bannerImageUrls = [
-                clothes["Clothes Banner Image 1"] as? String,
-                clothes["Clothes Banner Image 2"] as? String,
-                clothes["Clothes Banner Image 3"] as? String
-            ].compactMap { $0 }
-            
-            print("clothes", bannerImageUrls)
-
-
-            myCollectionView.reloadData()
-            startCarouselTimer()
-            UserDefaults.standard.set("Clothes", forKey: "lastSelectedCategory")
-
-        }
-    }
-    
-
-
-}
-
-extension UIColor {
-    convenience init?(hex: String) {
-        var hexString = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
-
-        if hexString.hasPrefix("#") {
-            hexString.removeFirst()
-        }
-
-        guard hexString.count == 6 else { return nil }
-
-        var rgbValue: UInt64 = 0
-        Scanner(string: hexString).scanHexInt64(&rgbValue)
-
-        self.init(
-            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
-            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
-            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
-            alpha: 1.0
         )
+
+        challengesSectionView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(challengesSectionView)
+
+        NSLayoutConstraint.activate([
+            challengesSectionView.topAnchor.constraint(equalTo: carousel.bottomAnchor, constant: 20),
+            challengesSectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            challengesSectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            challengesSectionView.heightAnchor.constraint(equalToConstant: 180)
+        ])
     }
-}
 
+    // MARK: - CATEGORIES SECTION
+    func setupCategoriesSection() {
+        categoriesSectionView = ThreeImageCardSectionView(
+            title: "Categories",
+            items: [
+                .init(imageName: "car-inusrance", title: "Car Insurance", url: nil),
+                .init(imageName: "Health_Insaurance", title: "Health Insurance", url: nil),
+                .init(imageName: "Life_Insauracne", title: "Life Insurance", url: nil)
+            ],
+            onSelect: { [weak self] index, item in
+                guard let self = self else { return }
 
-func loadImage(from urlString: String?, into imageView: UIImageView) {
-    guard let urlString = urlString, let url = URL(string: urlString) else { return }
-    
-    URLSession.shared.dataTask(with: url) { data, response, error in
-        if let data = data, let image = UIImage(data: data) {
-            DispatchQueue.main.async {
-                imageView.image = image
+                print("Selected Category:", item.title)
+
+                switch index {
+                case 0:
+                    navigateTo(loadVC(TrueMoneyViewController.self))
+                case 1:
+                    navigateTo(loadVC(SportsViewController.self))
+                case 2:
+                    navigateTo(loadVC(ClothesViewController.self))
+                default:
+                    break
+                }
             }
-        } else {
-            print("Failed to load image from URL: \(url)")
-        }
-    }.resume()
-}
+        )
+
+        categoriesSectionView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(categoriesSectionView)
+
+        NSLayoutConstraint.activate([
+            categoriesSectionView.topAnchor.constraint(equalTo: challengesSectionView.bottomAnchor, constant: 20),
+            categoriesSectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            categoriesSectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            categoriesSectionView.heightAnchor.constraint(equalToConstant: 180)
+        ])
+    }
 
 
-extension UIButton {
-    func applyPlainStyle() {
-        self.configuration = nil // removes Apple's default style
-        self.layer.cornerRadius = 10
-        self.clipsToBounds = true
+    // MARK: - LOGIN BUTTON
+    func setupLoginButton() {
+        let loginBtn = PrimaryButton(
+            title: "Login",
+            icon: UIImage(named: "login_icon"),
+            iconPosition: .left,
+            backgroundColor: .systemBlue,
+            textColor: .white,
+            action: {
+                print("Login tapped")
+            }
+        )
+
+        view.addSubview(loginBtn)
+
+        NSLayoutConstraint.activate([
+            loginBtn.topAnchor.constraint(equalTo: categoriesSectionView.bottomAnchor, constant: 20),
+            loginBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            loginBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            loginBtn.heightAnchor.constraint(equalToConstant: 50)
+        ])
     }
 }
-
-
-

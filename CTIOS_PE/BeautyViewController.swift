@@ -20,6 +20,7 @@ class BeautyViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         if let beauty = CleverTap.sharedInstance()?.getVariableValue("Beauty") as? [String: Any] {
             loadImage(from: beauty["Beauty Product 1"] as? String, into: img1)
             loadImage(from: beauty["Beauty Product 2"] as? String, into: img2)
@@ -31,6 +32,8 @@ class BeautyViewController: UIViewController {
             print("Failed to fetch Beauty data from CleverTap")
         }
     }
+    
+    
 
     
 
