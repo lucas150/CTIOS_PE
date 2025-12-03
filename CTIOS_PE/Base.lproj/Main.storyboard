@@ -28,7 +28,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="CTIOS_PE" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController" id="BYZ-38-t0r" customClass="ViewController" customModule="CTIOS_PE" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -236,7 +236,7 @@
         <!--Subscribe View Controller-->
         <scene sceneID="qmZ-lx-9Fu">
             <objects>
-                <viewController id="mqK-yd-Pxy" customClass="SubscribeViewController" customModule="CTIOS_PE" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SubscribeViewController" id="mqK-yd-Pxy" customClass="SubscribeViewController" customModule="CTIOS_PE" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FOI-wQ-y2c">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -420,7 +420,7 @@
         <!--True Money View Controller-->
         <scene sceneID="tUI-Uq-9OI">
             <objects>
-                <viewController id="hB3-Kj-YdM" customClass="TrueMoneyViewController" customModule="CTIOS_PE" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TrueMoneyViewController" id="hB3-Kj-YdM" customClass="TrueMoneyViewController" customModule="CTIOS_PE" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9gC-2d-jvH">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
