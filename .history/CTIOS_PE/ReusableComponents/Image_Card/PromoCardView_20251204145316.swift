@@ -84,13 +84,13 @@ private extension PromoCardView {
         actionButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
 
         // CAR IMAGE
-        carImageView.contentMode = .scaleAspectFill
-        carImageView.clipsToBounds = false
+        carImageView.contentMode = .scaleAspectFit
+        carImageView.clipsToBounds = true
         carImageView.backgroundColor = .clear
 
         // Add subviews
         addSubview(titleLabel)
-         addSubview(subtitleLabel)
+        addSubview(subtitleLabel)
         addSubview(actionButton)
         addSubview(carImageView)
 
@@ -102,31 +102,31 @@ private extension PromoCardView {
 
         NSLayoutConstraint.activate([
 
-            // TITLE - Full width at the top
+            // TITLE - Left side, leaving space for car
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 20),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-//
-//            // SUBTITLE - Full width below title
+            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: centerXAnchor, constant: 30),
+
+            // SUBTITLE - Left side below title
             subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 6),
             subtitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            subtitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            subtitleLabel.trailingAnchor.constraint(lessThanOrEqualTo: centerXAnchor, constant: 30),
 
             // BUTTON - Left side below subtitle
-            actionButton.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 20),
+            actionButton.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 16),
             actionButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            actionButton.widthAnchor.constraint(lessThanOrEqualToConstant: 200),
+            actionButton.widthAnchor.constraint(lessThanOrEqualToConstant: 140),
 
-            // CAR IMAGE - Center at bottom with overlap allowance
-            carImageView.topAnchor.constraint(equalTo: actionButton.bottomAnchor, constant: 10),
-            carImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            carImageView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 10),
-            carImageView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -10),
-            carImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 160),
-            carImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 210),
+            // CAR IMAGE - Right side, overlapping with content area
+            carImageView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 20),
+            carImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
+            carImageView.leadingAnchor.constraint(greaterThanOrEqualTo: centerXAnchor, constant: -50),
+            carImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 280),
+            carImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 180),
 
             // Ensures card has minimum height
-//            bottomAnchor.constraint(equalTo: carImageView.bottomAnchor, constant: 10)
+            bottomAnchor.constraint(greaterThanOrEqualTo: actionButton.bottomAnchor, constant: 20),
+            bottomAnchor.constraint(greaterThanOrEqualTo: carImageView.bottomAnchor, constant: 10)
         ])
     }
 

@@ -19,14 +19,6 @@ class ViewController: UIViewController {
         .instantiateViewController(withIdentifier: "BeautyViewController") as! BeautyViewController
 
 
-    
-    
-    
-
-
-    
-    
-    
     // MARK: - Carousel Data
     var bannerImageUrls: [String] = [
         "https://picsum.photos/400/200?random=1",
@@ -43,39 +35,39 @@ class ViewController: UIViewController {
         setupCarousel()
         setupChallengeSection()
         setupCategoriesSection()
-//        setupLoginButton()
-//        setupTrueMoneyButton()
+        setupLoginButton()
+        setupTrueMoneyButton()
         
        
-        CleverTap.sharedInstance()?.fetchVariables { [weak self] success in
-            guard let self = self else { return }
-            if !success { return }
-
-            guard let dict = CleverTap.sharedInstance()?.getVariableValue("ABTest") as? [String: Any] else {
-                print("ABTest dictionary missing")
-                return
-            }
-
-            let dashboardFlag = dict["Dashboard"] as? String ?? "No"
-            let loginFlag = dict["Login"] as? String ?? "No"
-
-            print("Dashboard Flag =", dashboardFlag)
-            print("Login Flag =", loginFlag)
-
-            // Show Dashboard button if YES
-            if dashboardFlag == "Yes" {
-                self.setupTrueMoneyButton()
-            } else {
-                print("Dashboard button disabled by ABTest")
-            }
-
-            // Show Login button if YES
-            if loginFlag == "Yes" {
-                self.setupLoginButton()
-            } else {
-                print("Login button disabled by ABTest")
-            }
-        }
+//        CleverTap.sharedInstance()?.fetchVariables { [weak self] success in
+//            guard let self = self else { return }
+//            if !success { return }
+//
+//            guard let dict = CleverTap.sharedInstance()?.getVariableValue("ABTest") as? [String: Any] else {
+//                print("ABTest dictionary missing")
+//                return
+//            }
+//
+//            let dashboardFlag = dict["Dashboard"] as? String ?? "No"
+//            let loginFlag = dict["Login"] as? String ?? "No"
+//
+//            print("Dashboard Flag =", dashboardFlag)
+//            print("Login Flag =", loginFlag)
+//
+//            // Show Dashboard button if YES
+//            if dashboardFlag == "Yes" {
+//                self.setupTrueMoneyButton()
+//            } else {
+//                print("Dashboard button disabled by ABTest")
+//            }
+//
+//            // Show Login button if YES
+//            if loginFlag == "Yes" {
+//                self.setupLoginButton()
+//            } else {
+//                print("Login button disabled by ABTest")
+//            }
+//        }
 
     }
 

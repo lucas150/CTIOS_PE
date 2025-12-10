@@ -20,6 +20,7 @@ class ThreeImageCardSectionView: UIView {
     private let titleLabel = UILabel()
     private let hStack = UIStackView()
     private var items: [ThreeImageCardItem] = []
+    private var imageViews: [UIImageView] = []   // <-- Store references for updating
     private var onSelect: ((Int, ThreeImageCardItem) -> Void)?
 
     // MARK: - Init
@@ -79,6 +80,7 @@ class ThreeImageCardSectionView: UIView {
             hStack.addArrangedSubview(makeTile(item: item, index: index))
         }
     }
+    
 
     // MARK: - Make Single Tile
     private func makeTile(item: ThreeImageCardItem, index: Int) -> UIView {
@@ -124,4 +126,31 @@ class ThreeImageCardSectionView: UIView {
         guard let index = sender.view?.tag else { return }
         onSelect?(index, items[index])
     }
+    
+    func updateImage(at index: Int, url: String?) {
+        guard let url = url, index < imageViews.count else { return }
+
+        items[index] = ThreeImageCardItem(
+            imageName: url,
+            title: items[index].title,
+            url: items[index].url
+        )
+
+        loadImage(from: url, into: imageViews[index])
+    }
+    
+    func loadImage(from urlString: String, into imageView: UIImageView) {
+        guard let url = URL(string: urlString) else { return }
+
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data, error == nil else { return }
+
+            DispatchQueue.main.async {
+                imageView.image = UIImage(data: data)
+            }
+        }.resume()
+    }
+
+
+
 }

@@ -8,13 +8,13 @@
 import UIKit
 import CleverTapSDK
  
-class TrueMoneyViewController:UIViewController, UICollectionViewDelegateFlowLayout {
+class TrueMoneyViewController:UIViewController,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     
-    private let carousel = CarouselView()
-    private var headerView: HeaderView!
-
-
+    @IBOutlet weak var PayNow: UIButton!
+    @IBOutlet weak var CollectionView: UICollectionView!
+    @IBOutlet weak var TrueMoneyImageView: UIImageView!
+    
     var headerGradientView: UIView!
     var headerGradientLayer: CAGradientLayer!
     var cardGradientLayer: CAGradientLayer!
@@ -22,8 +22,7 @@ class TrueMoneyViewController:UIViewController, UICollectionViewDelegateFlowLayo
 
 
 
-    var bannerImageUrls: [String] = [
-    ]
+
     // Icon rows
     var firstIconRow: UIStackView!
     var secondIconRow: UIStackView!
@@ -37,19 +36,35 @@ class TrueMoneyViewController:UIViewController, UICollectionViewDelegateFlowLayo
     private let carouselIndexKey = "TrueMoneyCarouselIndex"
     private let selectedCategoryKey = "TrueMoneySelectedCategory"
 
-
+    
+    var bannerImageUrls: [String] = [
+        ]// Empty
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupHeader()
+        
+        setupHeaderUI()
         setupCardUI()
         addCardImage("card_black")
         setupIconRowUI()
         setupSecondIconRowUI()
-        setupCarousel()
-        setupPayNowButton()
-
+        setupCarouselConstraints()
+        setupPayNowConstraints()
+        
+        CollectionView.layer.cornerRadius = 16
+        CollectionView.clipsToBounds = true
+        
+        
+        //theme
+        applyCurrentTheme()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(themeDidChange),
+                                               name: .themeDidChange,
+                                               object: nil)
+        
         
         let currentValue = UserDefaults.standard.integer(forKey: "contentCounter")
         
@@ -61,11 +76,16 @@ class TrueMoneyViewController:UIViewController, UICollectionViewDelegateFlowLayo
         
         // Restore previous state
         restoreCarouselState()
-        refreshCarousel()
-
     }
     
-
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // Resume carousel timer when view appears
+        if !bannerImageUrls.isEmpty {
+            startCarouselTimer()
+        }
+    }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -74,11 +94,6 @@ class TrueMoneyViewController:UIViewController, UICollectionViewDelegateFlowLayo
         saveCarouselState()
         carouselTimer?.invalidate()
         carouselTimer = nil
-    }
-    
-    deinit {
-        carouselTimer?.invalidate()
-        NotificationCenter.default.removeObserver(self)
     }
     
     private func saveCarouselState() {
@@ -134,73 +149,111 @@ class TrueMoneyViewController:UIViewController, UICollectionViewDelegateFlowLayo
         default:
             break
         }
+        
+        if !bannerImageUrls.isEmpty {
+            DispatchQueue.main.async {
+                self.CollectionView.reloadData()
+                // Scroll to saved position after reload
+                if self.currentCarouselIndex < self.bannerImageUrls.count {
+                    let indexPath = IndexPath(item: self.currentCarouselIndex, section: 0)
+                    self.CollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+                }
+            }
+        }
     }
  
     
     
     
-    func setupHeader() {
-        headerView = HeaderView()
-        headerView.translatesAutoresizingMaskIntoConstraints = false
-        headerView.titleText = "AIA"
-        headerView.logo = UIImage(named: "aia_white")
-
-        view.addSubview(headerView)
+    
+    func setupHeaderUI() {
+        let gradientView = UIView()
+        gradientView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(gradientView)
 
         NSLayoutConstraint.activate([
-            headerView.topAnchor.constraint(equalTo: view.topAnchor),
-            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            headerView.heightAnchor.constraint(equalToConstant: 180)
+            gradientView.topAnchor.constraint(equalTo: view.topAnchor),
+            gradientView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            gradientView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            gradientView.heightAnchor.constraint(equalToConstant: 220)
         ])
 
-        headerView.applyTheme(ThemeManager.shared.currentTheme)
-    }
+        // Gradient Layer
+        let gradient = CAGradientLayer()
+        gradient.colors = [
+            UIColor(red: 60/255, green: 120/255, blue: 255/255, alpha: 1).cgColor,
+            UIColor(red: 120/255, green: 80/255, blue: 255/255, alpha: 1).cgColor
+        ]
+        gradient.startPoint = CGPoint(x: 0, y: 0)
+        gradient.endPoint = CGPoint(x: 1, y: 1)
+        gradient.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 220)
+        gradientView.layer.insertSublayer(gradient, at: 0)
 
-    
-    
-    func setupCarousel() {
-        carousel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(carousel)
+        
+        // ---- 2. Decorative Background Circles ----
+
+        func makeCircle(size: CGFloat, alpha: CGFloat) -> UIView {
+            let c = UIView()
+            c.backgroundColor = UIColor.white.withAlphaComponent(alpha)
+            c.layer.cornerRadius = size / 2
+            c.translatesAutoresizingMaskIntoConstraints = false
+            gradientView.addSubview(c)
+            NSLayoutConstraint.activate([
+                c.widthAnchor.constraint(equalToConstant: size),
+                c.heightAnchor.constraint(equalToConstant: size)
+            ])
+            return c
+        }
+
+        let circle1 = makeCircle(size: 160, alpha: 0.08)
+        let circle2 = makeCircle(size: 120, alpha: 0.07)
+        let circle3 = makeCircle(size: 80, alpha: 0.10)
 
         NSLayoutConstraint.activate([
-            carousel.topAnchor.constraint(equalTo: secondIconRow.safeAreaLayoutGuide.topAnchor, constant: 90),
-            carousel.leadingAnchor.constraint(equalTo: secondIconRow.leadingAnchor, constant: 20),
-            carousel.trailingAnchor.constraint(equalTo: secondIconRow.trailingAnchor, constant: -20),
-            carousel.heightAnchor.constraint(equalToConstant: 220)
+            circle1.topAnchor.constraint(equalTo: gradientView.topAnchor, constant: -30),
+            circle1.leadingAnchor.constraint(equalTo: gradientView.leadingAnchor, constant: -40),
+
+            circle2.topAnchor.constraint(equalTo: gradientView.topAnchor, constant: 40),
+            circle2.trailingAnchor.constraint(equalTo: gradientView.trailingAnchor, constant: -10),
+
+            circle3.bottomAnchor.constraint(equalTo: gradientView.bottomAnchor, constant: -30),
+            circle3.centerXAnchor.constraint(equalTo: gradientView.centerXAnchor)
         ])
 
-        carousel.items = bannerImageUrls.map { .url($0) }
-        carousel.autoScrollInterval = 3
-        carousel.startAutoScroll()
-    }
+        
+        
+        // MARK: - Title Image
+        let logoImageView = UIImageView()
+         logoImageView.image = UIImage(named: "aia_white")      // your logo
+         logoImageView.contentMode = .scaleAspectFit
+         logoImageView.translatesAutoresizingMaskIntoConstraints = false
 
+         let titleLabel = UILabel()
+         titleLabel.text = "AIA"
+         titleLabel.textColor = .white
+         titleLabel.font = UIFont.boldSystemFont(ofSize: 26)
+         titleLabel.translatesAutoresizingMaskIntoConstraints = false
 
+         let hStack = UIStackView(arrangedSubviews: [logoImageView, titleLabel])
+         hStack.axis = .horizontal
+         hStack.spacing = 12
+         hStack.alignment = .center
+         hStack.translatesAutoresizingMaskIntoConstraints = false
+
+         gradientView.addSubview(hStack)
+
+         NSLayoutConstraint.activate([
+             hStack.topAnchor.constraint(equalTo: gradientView.safeAreaLayoutGuide.topAnchor, constant: -60),
+             hStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 130),
+             hStack.centerXAnchor.constraint(equalTo: gradientView.centerXAnchor)
+         ])
+
+         NSLayoutConstraint.activate([
+             logoImageView.widthAnchor.constraint(equalToConstant: 70),
+             logoImageView.heightAnchor.constraint(equalToConstant: 70)
+         ])
+     }
     
-    
-    func setupPayNowButton() {
-        let PayNow = PrimaryButton(
-            title: "Pay Now",
-            icon: UIImage(named: "PayNow"),
-            iconPosition: .left,
-            backgroundColor: .systemBlue,
-            textColor: .white,
-            action: { [weak self] in
-                guard let self = self else { return }
-                print("Pay Now Button Tapped")
-                self.navigateTo(self.loadVC(SubscribeViewController.self))
-            }
-        )
-
-        view.addSubview(PayNow)
-
-        NSLayoutConstraint.activate([
-            PayNow.topAnchor.constraint(equalTo: carousel.bottomAnchor, constant: 20),
-            PayNow.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            PayNow.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            PayNow.heightAnchor.constraint(equalToConstant: 50)
-        ])
-    }
 
     
       
@@ -216,7 +269,7 @@ class TrueMoneyViewController:UIViewController, UICollectionViewDelegateFlowLayo
         self.cardContainer = card
 
         NSLayoutConstraint.activate([
-            card.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
+            card.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             card.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             card.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             card.heightAnchor.constraint(equalToConstant: 180)
@@ -340,12 +393,13 @@ class TrueMoneyViewController:UIViewController, UICollectionViewDelegateFlowLayo
         container.alignment = .center
         container.spacing = 8
         container.translatesAutoresizingMaskIntoConstraints = false
-        container.isUserInteractionEnabled = false
+        container.isUserInteractionEnabled = false // ⭐ ADD THIS LINE
 
         // ---- Circle BG ----
         let bgCircle = UIView()
+//        bgCircle.backgroundColor = .white
         bgCircle.layer.cornerRadius = 30
-        bgCircle.layer.shadowColor = UIColor.black.cgColor
+        bgCircle.layer.shadowColor = UIColor.black.cgColor // Add this too
         bgCircle.layer.shadowOpacity = 0.12
         bgCircle.layer.shadowRadius = 6
         bgCircle.layer.shadowOffset = CGSize(width: 0, height: 4)
@@ -374,6 +428,7 @@ class TrueMoneyViewController:UIViewController, UICollectionViewDelegateFlowLayo
         let label = UILabel()
         label.text = title
         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+//        label.textColor = .darkGray
         label.textAlignment = .center
 
         // stack views
@@ -399,13 +454,6 @@ class TrueMoneyViewController:UIViewController, UICollectionViewDelegateFlowLayo
     }
     
     
-    
-    
-
-    
-    
-    
-    
     @objc func animateButtonDown(_ sender: UIButton) {
         UIView.animate(withDuration: 0.15) {
             sender.transform = CGAffineTransform(scaleX: 0.92, y: 0.92)
@@ -423,16 +471,57 @@ class TrueMoneyViewController:UIViewController, UICollectionViewDelegateFlowLayo
         let generator = UIImpactFeedbackGenerator(style: .light)
         generator.impactOccurred()
         
-        loadContentForCategory(sender.tag)
-        refreshCarousel()
-
-        lastSelectedTag = sender.tag
-
+        // 👇 Ignore reload if same button tapped again
+        if lastSelectedTag == sender.tag {
+            print("⏳ Same category tapped - no change")
+            return
+        }
+        
+        lastSelectedTag = sender.tag  // Update latest selected category
+        
+        
         switch sender.tag {
         // First Row
         case 0: print("✅ Bills tapped")
+            if let sports = CleverTap.sharedInstance()?.getVariableValue("Sports") as? [String: Any] {
+                
+                bannerImageUrls = [
+                    sports["Sports Banner Image 1"] as? String,
+                    sports["Sports Banner Image 2"] as? String,
+                    sports["Sports Banner Image 3"] as? String
+                ].compactMap { $0 }
+                
+                print("sports", bannerImageUrls)
+                CollectionView.reloadData()
+                startCarouselTimer()
+            }
+        
         case 1: print("✅ Insurance tapped")
+            if let beauty = CleverTap.sharedInstance()?.getVariableValue("Beauty") as? [String: Any] {
+                
+                bannerImageUrls = [
+                    beauty["Beauty Banner Image 1"] as? String,
+                    beauty["Beauty Banner Image 2"] as? String,
+                    beauty["Beauty Banner Image 3"] as? String
+                ].compactMap { $0 }
+                
+                print("beauty", bannerImageUrls)
+                CollectionView.reloadData()
+                startCarouselTimer()
+            }
         case 2: print("✅ Electricity tapped")
+            if let clothes = CleverTap.sharedInstance()?.getVariableValue("Clothes") as? [String: Any] {
+                
+                bannerImageUrls = [
+                    clothes["Clothes Banner Image 1"] as? String,
+                    clothes["Clothes Banner Image 2"] as? String,
+                    clothes["Clothes Banner Image 3"] as? String
+                ].compactMap { $0 }
+                
+                print("clothes", bannerImageUrls)
+                CollectionView.reloadData()
+                startCarouselTimer()
+            }
         case 3: print("✅ Prepaid tapped")
         
         // Second Row
@@ -443,6 +532,9 @@ class TrueMoneyViewController:UIViewController, UICollectionViewDelegateFlowLayo
         
         default: break
         }
+        // Reload only when category changes
+         CollectionView.reloadData()
+        startCarouselTimer()
     }
     
 
@@ -464,6 +556,77 @@ class TrueMoneyViewController:UIViewController, UICollectionViewDelegateFlowLayo
         }
 
 
+
+      
+      // MARK: - Place Carousel
+      func setupCarouselConstraints() {
+          CollectionView.translatesAutoresizingMaskIntoConstraints = false
+          
+          NSLayoutConstraint.activate([
+              CollectionView.topAnchor.constraint(equalTo: secondIconRow.bottomAnchor, constant: 20),
+              CollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+              CollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+              CollectionView.heightAnchor.constraint(equalToConstant: 200)
+          ])
+      }
+      
+      // MARK: - Place Pay Now Button
+      func setupPayNowConstraints() {
+          PayNow.translatesAutoresizingMaskIntoConstraints = false
+          
+          NSLayoutConstraint.activate([
+              PayNow.topAnchor.constraint(equalTo: CollectionView.bottomAnchor, constant: 35),
+              PayNow.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+              PayNow.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+              PayNow.heightAnchor.constraint(equalToConstant: 55)
+          ])
+      }
+
+    
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return bannerImageUrls.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = CollectionView.dequeueReusableCell(withReuseIdentifier: "cell3", for: indexPath) as! TrueMoneyCollectionViewCell
+        
+        let imageUrl = bannerImageUrls[indexPath.item]
+            print(":camera_with_flash: Loading image for cell \(indexPath.item): \(imageUrl)")
+        
+        loadImage(from: bannerImageUrls[indexPath.item], into: cell.truemoneyImageView)
+        return cell
+
+    }
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: CollectionView.frame.width, height: CollectionView.frame.height)
+
+    }
+    func startCarouselTimer() {
+        carouselTimer?.invalidate()
+        carouselTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { _ in
+            guard self.bannerImageUrls.count > 1 else { return }
+            self.currentCarouselIndex = (self.currentCarouselIndex + 1) % self.bannerImageUrls.count
+            let indexPath = IndexPath(item: self.currentCarouselIndex, section: 0)
+            self.CollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        }
+    }
+    
+    //theme
+    @objc func themeDidChange() {
+        applyCurrentTheme()
+    }
+
+    func applyCurrentTheme() {
+        ThemeManager.shared.applyTheme(
+            to: self,
+            collectionView: CollectionView,
+            themeButton: PayNow,
+//            loginButton: nil,
+
+        )
+    }
+    
     func updateIconTint(color: UIColor, textColor: UIColor? = nil) {
 
         func updateRow(_ row: UIStackView) {
@@ -482,14 +645,6 @@ class TrueMoneyViewController:UIViewController, UICollectionViewDelegateFlowLayo
 
         updateRow(firstIconRow)
         updateRow(secondIconRow)
-    }
-
-    func refreshCarousel() {
-        DispatchQueue.main.async {
-            self.carousel.stopAutoScroll()
-            self.carousel.items = self.bannerImageUrls.map { .url($0) }
-            self.carousel.startAutoScroll()
-        }
     }
 
 

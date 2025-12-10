@@ -84,13 +84,13 @@ private extension PromoCardView {
         actionButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
 
         // CAR IMAGE
-        carImageView.contentMode = .scaleAspectFill
-        carImageView.clipsToBounds = false
+        carImageView.contentMode = .scaleAspectFit
+        carImageView.clipsToBounds = true
         carImageView.backgroundColor = .clear
 
         // Add subviews
         addSubview(titleLabel)
-         addSubview(subtitleLabel)
+        addSubview(subtitleLabel)
         addSubview(actionButton)
         addSubview(carImageView)
 
@@ -106,27 +106,27 @@ private extension PromoCardView {
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 20),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-//
-//            // SUBTITLE - Full width below title
+
+            // SUBTITLE - Full width below title
             subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 6),
             subtitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             subtitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
 
             // BUTTON - Left side below subtitle
-            actionButton.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 20),
+            actionButton.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 16),
             actionButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            actionButton.widthAnchor.constraint(lessThanOrEqualToConstant: 200),
+            actionButton.widthAnchor.constraint(lessThanOrEqualToConstant: 140),
 
-            // CAR IMAGE - Center at bottom with overlap allowance
-            carImageView.topAnchor.constraint(equalTo: actionButton.bottomAnchor, constant: 10),
+            // CAR IMAGE - Center below button
+            carImageView.topAnchor.constraint(equalTo: actionButton.bottomAnchor, constant: 20),
             carImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             carImageView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 10),
             carImageView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -10),
-            carImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 160),
-            carImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 210),
+            carImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 360),
+            carImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 240),
 
-            // Ensures card has minimum height
-//            bottomAnchor.constraint(equalTo: carImageView.bottomAnchor, constant: 10)
+            // Ensures card has minimum height based on content
+            bottomAnchor.constraint(equalTo: carImageView.bottomAnchor, constant: 20)
         ])
     }
 
@@ -135,53 +135,6 @@ private extension PromoCardView {
         gradientLayer.startPoint = CGPoint(x: 0, y: 0)
         gradientLayer.endPoint = CGPoint(x: 1, y: 1)
         layer.insertSublayer(gradientLayer, at: 0)
-        
-        // Add decorative elements
-        addDecorativeElements()
-    }
-    
-    func addDecorativeElements() {
-        // Create decorative circles for visual appeal
-        let circle1 = createDecorativeCircle(size: 120, alpha: 0.1)
-        let circle2 = createDecorativeCircle(size: 80, alpha: 0.08)
-        let circle3 = createDecorativeCircle(size: 60, alpha: 0.12)
-        
-        addSubview(circle1)
-        addSubview(circle2)
-        addSubview(circle3)
-        
-        // Send circles to back but above gradient
-        sendSubviewToBack(circle1)
-        sendSubviewToBack(circle2)
-        sendSubviewToBack(circle3)
-        
-        NSLayoutConstraint.activate([
-            // Large circle - top right
-            circle1.topAnchor.constraint(equalTo: topAnchor, constant: -30),
-            circle1.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 20),
-            
-            // Medium circle - bottom left
-            circle2.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 10),
-            circle2.leadingAnchor.constraint(equalTo: leadingAnchor, constant: -20),
-            
-            // Small circle - center right
-            circle3.centerYAnchor.constraint(equalTo: centerYAnchor),
-            circle3.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 30)
-        ])
-    }
-    
-    func createDecorativeCircle(size: CGFloat, alpha: CGFloat) -> UIView {
-        let circle = UIView()
-        circle.backgroundColor = UIColor.white.withAlphaComponent(alpha)
-        circle.layer.cornerRadius = size / 2
-        circle.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            circle.widthAnchor.constraint(equalToConstant: size),
-            circle.heightAnchor.constraint(equalToConstant: size)
-        ])
-        
-        return circle
     }
 
     public override func layoutSubviews() {

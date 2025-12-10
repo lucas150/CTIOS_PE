@@ -11,6 +11,7 @@ import CleverTapSDK
 class TrueMoneyViewController:UIViewController, UICollectionViewDelegateFlowLayout {
     
     
+    @IBOutlet weak var PayNow: UIButton!
     private let carousel = CarouselView()
     private var headerView: HeaderView!
 
@@ -48,7 +49,6 @@ class TrueMoneyViewController:UIViewController, UICollectionViewDelegateFlowLayo
         setupIconRowUI()
         setupSecondIconRowUI()
         setupCarousel()
-        setupPayNowButton()
 
         
         let currentValue = UserDefaults.standard.integer(forKey: "contentCounter")
@@ -157,50 +157,8 @@ class TrueMoneyViewController:UIViewController, UICollectionViewDelegateFlowLayo
         headerView.applyTheme(ThemeManager.shared.currentTheme)
     }
 
-    
-    
-    func setupCarousel() {
-        carousel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(carousel)
-
-        NSLayoutConstraint.activate([
-            carousel.topAnchor.constraint(equalTo: secondIconRow.safeAreaLayoutGuide.topAnchor, constant: 90),
-            carousel.leadingAnchor.constraint(equalTo: secondIconRow.leadingAnchor, constant: 20),
-            carousel.trailingAnchor.constraint(equalTo: secondIconRow.trailingAnchor, constant: -20),
-            carousel.heightAnchor.constraint(equalToConstant: 220)
-        ])
-
-        carousel.items = bannerImageUrls.map { .url($0) }
-        carousel.autoScrollInterval = 3
-        carousel.startAutoScroll()
-    }
 
 
-    
-    
-    func setupPayNowButton() {
-        let PayNow = PrimaryButton(
-            title: "Pay Now",
-            icon: UIImage(named: "PayNow"),
-            iconPosition: .left,
-            backgroundColor: .systemBlue,
-            textColor: .white,
-            action: { [weak self] in
-                guard let self = self else { return }
-                print("Pay Now Button Tapped")
-                self.navigateTo(self.loadVC(SubscribeViewController.self))
-            }
-        )
-
-        view.addSubview(PayNow)
-
-        NSLayoutConstraint.activate([
-            PayNow.topAnchor.constraint(equalTo: carousel.bottomAnchor, constant: 20),
-            PayNow.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            PayNow.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            PayNow.heightAnchor.constraint(equalToConstant: 50)
-        ])
-    }
 
     
       
@@ -340,12 +298,13 @@ class TrueMoneyViewController:UIViewController, UICollectionViewDelegateFlowLayo
         container.alignment = .center
         container.spacing = 8
         container.translatesAutoresizingMaskIntoConstraints = false
-        container.isUserInteractionEnabled = false
+        container.isUserInteractionEnabled = false // ⭐ ADD THIS LINE
 
         // ---- Circle BG ----
         let bgCircle = UIView()
+//        bgCircle.backgroundColor = .white
         bgCircle.layer.cornerRadius = 30
-        bgCircle.layer.shadowColor = UIColor.black.cgColor
+        bgCircle.layer.shadowColor = UIColor.black.cgColor // Add this too
         bgCircle.layer.shadowOpacity = 0.12
         bgCircle.layer.shadowRadius = 6
         bgCircle.layer.shadowOffset = CGSize(width: 0, height: 4)
@@ -374,6 +333,7 @@ class TrueMoneyViewController:UIViewController, UICollectionViewDelegateFlowLayo
         let label = UILabel()
         label.text = title
         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+//        label.textColor = .darkGray
         label.textAlignment = .center
 
         // stack views
@@ -401,7 +361,21 @@ class TrueMoneyViewController:UIViewController, UICollectionViewDelegateFlowLayo
     
     
     
+    func setupCarousel() {
+        carousel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(carousel)
 
+        NSLayoutConstraint.activate([
+            carousel.topAnchor.constraint(equalTo: secondIconRow.safeAreaLayoutGuide.topAnchor, constant: 80),
+            carousel.leadingAnchor.constraint(equalTo: secondIconRow.leadingAnchor, constant: 20),
+            carousel.trailingAnchor.constraint(equalTo: secondIconRow.trailingAnchor, constant: -20),
+            carousel.heightAnchor.constraint(equalToConstant: 220)
+        ])
+
+        carousel.items = bannerImageUrls.map { .url($0) }
+        carousel.autoScrollInterval = 3
+        carousel.startAutoScroll()
+    }
     
     
     
@@ -464,6 +438,36 @@ class TrueMoneyViewController:UIViewController, UICollectionViewDelegateFlowLayo
         }
 
 
+
+      
+      
+      // MARK: - Place Pay Now Button
+      func setupPayNowConstraints() {
+          PayNow.translatesAutoresizingMaskIntoConstraints = false
+          
+          NSLayoutConstraint.activate([
+              PayNow.topAnchor.constraint(equalTo: carousel.bottomAnchor, constant: 35),
+              PayNow.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+              PayNow.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+              PayNow.heightAnchor.constraint(equalToConstant: 55)
+          ])
+      }
+//    // Track manual scrolling to update current index
+//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//        let pageIndex = Int(scrollView.contentOffset.x / scrollView.frame.width)
+//        if pageIndex != currentCarouselIndex && pageIndex < bannerImageUrls.count {
+//            currentCarouselIndex = pageIndex
+//        }
+//    }
+    
+//    // Also track programmatic scrolling
+//    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+//        let pageIndex = Int(scrollView.contentOffset.x / scrollView.frame.width)
+//        if pageIndex != currentCarouselIndex && pageIndex < bannerImageUrls.count {
+//            currentCarouselIndex = pageIndex
+//        }
+//    }
+//    
     func updateIconTint(color: UIColor, textColor: UIColor? = nil) {
 
         func updateRow(_ row: UIStackView) {

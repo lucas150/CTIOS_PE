@@ -113,20 +113,20 @@ private extension PromoCardView {
             subtitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
 
             // BUTTON - Left side below subtitle
-            actionButton.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 20),
+            actionButton.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 16),
             actionButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             actionButton.widthAnchor.constraint(lessThanOrEqualToConstant: 200),
 
             // CAR IMAGE - Center at bottom with overlap allowance
-            carImageView.topAnchor.constraint(equalTo: actionButton.bottomAnchor, constant: 10),
+            carImageView.topAnchor.constraint(equalTo: actionButton.bottomAnchor, constant: 20),
             carImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             carImageView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 10),
             carImageView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -10),
-            carImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 160),
-            carImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 210),
+            carImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 260),
+            carImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 360),
 
             // Ensures card has minimum height
-//            bottomAnchor.constraint(equalTo: carImageView.bottomAnchor, constant: 10)
+//            bottomAnchor.constraint(equalTo: carImageView.bottomAnchor, constant: 20)
         ])
     }
 
