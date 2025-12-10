@@ -1,0 +1,21 @@
+{
+  "images" : [
+    {
+      "filename" : "amg-sl55-roadster-exterior-right-front-three-quarter-3-removebg-preview.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
