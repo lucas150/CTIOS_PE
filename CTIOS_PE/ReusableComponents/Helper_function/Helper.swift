@@ -21,6 +21,46 @@ extension UIViewController {
     
 }
 
+extension UIColor {
+    convenience init(hex: String) {
+        var cleanHex = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+
+        if cleanHex.hasPrefix("#") {
+            cleanHex.removeFirst()
+        }
+
+        // Invalid hex length? default to black
+        guard cleanHex.count == 6 else {
+            self.init(white: 0.0, alpha: 1.0)
+            return
+        }
+
+        var rgbValue: UInt64 = 0
+        Scanner(string: cleanHex).scanHexInt64(&rgbValue)
+
+        self.init(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: 1.0
+        )
+    }
+}
+
+
+extension Themeable where Self: UIViewController {
+    func applyTheme(_ theme: ThemeProtocol) {
+        view.backgroundColor = theme.background
+    }
+}
+
+extension Notification.Name {
+    static let themeDidChange = Notification.Name("themeDidChange")
+}
+
+
+
+
 func loadImage(from urlString: String?, into imageView: UIImageView, completion: ((UIImage?) -> Void)? = nil) {
     guard let urlString = urlString,
           let url = URL(string: urlString) else {

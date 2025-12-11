@@ -32,11 +32,15 @@ class CarouselView: UIView,
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupCollectionView()
+        applyTheme()
+
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupCollectionView()
+        applyTheme()
+
     }
 
     // MARK: - Setup
@@ -176,4 +180,20 @@ class CarouselView: UIView,
         cell.configure(with: infiniteItems[indexPath.item])
         return cell
     }
+    
+
+    // MARK: - Apply Theme
+    func applyTheme() {
+        let theme = AppTheme.shared.current
+        backgroundColor = .clear   // parent view stays transparent
+        layer.cornerRadius = theme.cornerRadius
+    }
+
+    // Auto-update on Light/Dark mode change
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        applyTheme()
+        collectionView.reloadData()
+    }
+
 }

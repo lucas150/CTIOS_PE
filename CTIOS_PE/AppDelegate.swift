@@ -12,14 +12,6 @@ import CleverTapSDK
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate,CleverTapDisplayUnitDelegate {
     
     
-    
-    
-    // Primitive types
-
-    
-
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         

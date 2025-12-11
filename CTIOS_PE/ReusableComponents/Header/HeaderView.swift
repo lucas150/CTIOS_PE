@@ -6,6 +6,8 @@ final class HeaderView: UIView {
     private let gradientLayer = CAGradientLayer()
     private let logoImageView = UIImageView()
     private let titleLabel = UILabel()
+    private var decorativeCircles: [UIView] = []
+
 
     // MARK: - Custom Properties
     var titleText: String = "" {
@@ -20,13 +22,16 @@ final class HeaderView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
-        applyDefaultThemeAppearance()
+        applyTheme()
+//        applyDefaultThemeAppearance()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupView()
-        applyDefaultThemeAppearance()
+        applyTheme()
+
+//        applyDefaultThemeAppearance()
     }
 
     override func layoutSubviews() {
@@ -69,12 +74,14 @@ final class HeaderView: UIView {
 
     private func addDecorativeCircles() {
 
-        func makeCircle(size: CGFloat, alpha: CGFloat) -> UIView {
+        func makeCircle(size: CGFloat, alpha: CGFloat  = 0.12) -> UIView {
             let c = UIView()
             c.backgroundColor = UIColor.white.withAlphaComponent(alpha)
             c.layer.cornerRadius = size / 2
             c.translatesAutoresizingMaskIntoConstraints = false
             addSubview(c)
+            decorativeCircles.append(c)   
+
             NSLayoutConstraint.activate([
                 c.widthAnchor.constraint(equalToConstant: size),
                 c.heightAnchor.constraint(equalToConstant: size)
@@ -82,9 +89,10 @@ final class HeaderView: UIView {
             return c
         }
 
-        let c1 = makeCircle(size: 150, alpha: 0.08)
-        let c2 = makeCircle(size: 110, alpha: 0.10)
-        let c3 = makeCircle(size: 80, alpha: 0.12)
+
+        let c1 = makeCircle(size: 150)
+        let c2 = makeCircle(size: 110)
+        let c3 = makeCircle(size: 80)
 
         NSLayoutConstraint.activate([
             c1.topAnchor.constraint(equalTo: topAnchor, constant: -25),
@@ -98,13 +106,35 @@ final class HeaderView: UIView {
         ])
     }
 
-    // MARK: - THEME UPDATE
-    func applyTheme(_ theme: Theme) {
-        gradientLayer.colors = [theme.headerGradientTop.cgColor,
-                                theme.headerGradientBottom.cgColor]
+    // MARK: - THEME APPLYING
+    func applyTheme() {
+        let theme = AppTheme.shared.current
 
-        titleLabel.textColor = theme.headerTextColor
+        // Gradient header background
+        gradientLayer.colors = [
+            theme.primary.withAlphaComponent(0.95).cgColor,
+            theme.primary.withAlphaComponent(0.70).cgColor
+        ]
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+
+        // Title styling
+        titleLabel.font = theme.headerFont
+        titleLabel.textColor = theme.textPrimary
+
+        // Decorative circles — tinted based on theme
+        decorativeCircles.forEach { circle in
+            circle.backgroundColor = theme.cardBackground.withAlphaComponent(0.12)
+        }
     }
+    
+    
+    // MARK: Auto-update on Dark/Light Mode Change
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        applyTheme()
+    }
+
 
     private func applyDefaultThemeAppearance() {
         gradientLayer.colors = [

@@ -57,7 +57,7 @@ class BeautyViewController: UIViewController {
             headerView.heightAnchor.constraint(equalToConstant: 180)
         ])
         
-        headerView.applyTheme(ThemeManager.shared.currentTheme)
+//        headerView.applyTheme(ThemeManager.shared.currentTheme)
     }
     
     

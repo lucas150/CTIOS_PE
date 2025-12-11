@@ -4,7 +4,6 @@
 //
 //  Created by Henil Gandhi on 04/12/25.
 //
-
 import UIKit
 
 public class PromoCardView: UIView {
@@ -14,14 +13,15 @@ public class PromoCardView: UIView {
     private let actionButton = UIButton(type: .system)
     private let carImageView = UIImageView()
     private let gradientLayer = CAGradientLayer()
+    private var decorativeCircles: [UIView] = []
     private var buttonAction: (() -> Void)?
 
-    // MARK: - Initializer
+    // MARK: - Init
     public init(
         title: String,
         subtitle: String,
         buttonTitle: String,
-        backgroundColors: [UIColor],
+        backgroundColors: [UIColor]? = nil,
         image: UIImage?,
         action: (() -> Void)?
     ) {
@@ -29,7 +29,12 @@ public class PromoCardView: UIView {
         self.buttonAction = action
 
         setupUI()
-        setupGradient(colors: backgroundColors)
+        applyTheme()
+
+        // Optional custom gradient
+        if let colors = backgroundColors {
+            setupCustomGradient(colors)
+        }
 
         titleLabel.text = title
         subtitleLabel.text = subtitle
@@ -37,158 +42,163 @@ public class PromoCardView: UIView {
         carImageView.image = image
     }
 
-    required public init?(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Public Methods
-    public func updateContent(title: String? = nil, subtitle: String? = nil, buttonTitle: String? = nil, image: UIImage? = nil) {
-        if let title = title { titleLabel.text = title }
-        if let subtitle = subtitle { subtitleLabel.text = subtitle }
-        if let buttonTitle = buttonTitle { actionButton.setTitle(buttonTitle, for: .normal) }
-        if let image = image { carImageView.image = image }
+
+
+    // MARK: - Theme Applying
+    private func applyTheme() {
+        let theme = AppTheme.shared.current
+
+        // Gradient background (theme primary)
+        gradientLayer.colors = [
+            theme.primary.withAlphaComponent(0.95).cgColor,
+            theme.primary.withAlphaComponent(0.75).cgColor
+        ]
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+
+        // Card styling
+        layer.cornerRadius = theme.cornerRadius
+        layer.shadowOpacity = theme.shadowOpacity
+        layer.shadowRadius = theme.shadowRadius
+        layer.shadowOffset = CGSize(width: 0, height: 4)
+        layer.shadowColor = UIColor.black.cgColor
+
+        // Title
+        titleLabel.font = theme.headerFont
+        titleLabel.textColor = theme.textPrimary
+
+        // Subtitle
+        subtitleLabel.font = theme.bodyFont
+        subtitleLabel.textColor = theme.textPrimary.withAlphaComponent(0.85)
+
+        // Button styling
+        actionButton.backgroundColor = theme.cardBackground
+        actionButton.tintColor = theme.primary
+        actionButton.titleLabel?.font = theme.buttonFont
+        actionButton.layer.cornerRadius = theme.cornerRadius / 2
+        actionButton.layer.borderColor = theme.primary.cgColor
+        actionButton.layer.borderWidth = 2
+
+        // Decorative circles
+        decorativeCircles.forEach { circle in
+            circle.backgroundColor = theme.cardBackground.withAlphaComponent(0.10)
+        }
     }
-}
 
 
-// MARK: - UI Setup
-private extension PromoCardView {
+    // MARK: Auto-update on system theme
+    public override func traitCollectionDidChange(_ previous: UITraitCollection?) {
+        super.traitCollectionDidChange(previous)
+        applyTheme()
+    }
 
-    func setupUI() {
 
-        layer.cornerRadius = 22
-        clipsToBounds = true
+    // MARK: - UI Setup
+    private func setupUI() {
+
+        layer.insertSublayer(gradientLayer, at: 0)
 
         // TITLE
-        titleLabel.font = .boldSystemFont(ofSize: 26)
-        titleLabel.textColor = .white
         titleLabel.numberOfLines = 0
-        titleLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
-        titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
-
-        // SUBTITLE
-        subtitleLabel.font = .systemFont(ofSize: 17)
-        subtitleLabel.textColor = .white
         subtitleLabel.numberOfLines = 2
-        subtitleLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
-        subtitleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
 
-        // BUTTON - Updated styling to match design
-        actionButton.setTitleColor(UIColor.systemOrange, for: .normal)
-        actionButton.titleLabel?.font = .boldSystemFont(ofSize: 15)
-        actionButton.backgroundColor = .white
-        actionButton.layer.cornerRadius = 8
-        actionButton.layer.borderWidth = 2
-        actionButton.layer.borderColor = UIColor.systemBlue.cgColor
+        // BUTTON
         actionButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 24, bottom: 12, right: 24)
         actionButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
 
-        // CAR IMAGE
+        // IMAGE
         carImageView.contentMode = .scaleAspectFill
-        carImageView.clipsToBounds = false
-        carImageView.backgroundColor = .clear
 
-        // Add subviews
         addSubview(titleLabel)
-         addSubview(subtitleLabel)
+        addSubview(subtitleLabel)
         addSubview(actionButton)
         addSubview(carImageView)
 
-        // Autolayout
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         actionButton.translatesAutoresizingMaskIntoConstraints = false
         carImageView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-
-            // TITLE - Full width at the top
+            // Title
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 20),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-//
-//            // SUBTITLE - Full width below title
+
+            // Subtitle
             subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 6),
             subtitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             subtitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
 
-            // BUTTON - Left side below subtitle
+            // Button
             actionButton.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 20),
             actionButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            actionButton.widthAnchor.constraint(lessThanOrEqualToConstant: 200),
 
-            // CAR IMAGE - Center at bottom with overlap allowance
-            carImageView.topAnchor.constraint(equalTo: actionButton.bottomAnchor, constant: 10),
+            // Image
+            carImageView.topAnchor.constraint(equalTo: actionButton.bottomAnchor, constant: 20),
             carImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            carImageView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 10),
-            carImageView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -10),
-            carImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 160),
-            carImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 210),
-
-            // Ensures card has minimum height
-//            bottomAnchor.constraint(equalTo: carImageView.bottomAnchor, constant: 10)
+            carImageView.widthAnchor.constraint(equalToConstant: 160),
+            carImageView.heightAnchor.constraint(equalToConstant: 180),
         ])
+
+        addDecorativeCircles()
     }
 
-    func setupGradient(colors: [UIColor]) {
+
+    // MARK: - Custom Gradient (Optional)
+    private func setupCustomGradient(_ colors: [UIColor]) {
         gradientLayer.colors = colors.map { $0.cgColor }
-        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
-        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
-        layer.insertSublayer(gradientLayer, at: 0)
-        
-        // Add decorative elements
-        addDecorativeElements()
-    }
-    
-    func addDecorativeElements() {
-        // Create decorative circles for visual appeal
-        let circle1 = createDecorativeCircle(size: 120, alpha: 0.1)
-        let circle2 = createDecorativeCircle(size: 80, alpha: 0.08)
-        let circle3 = createDecorativeCircle(size: 60, alpha: 0.12)
-        
-        addSubview(circle1)
-        addSubview(circle2)
-        addSubview(circle3)
-        
-        // Send circles to back but above gradient
-        sendSubviewToBack(circle1)
-        sendSubviewToBack(circle2)
-        sendSubviewToBack(circle3)
-        
-        NSLayoutConstraint.activate([
-            // Large circle - top right
-            circle1.topAnchor.constraint(equalTo: topAnchor, constant: -30),
-            circle1.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 20),
-            
-            // Medium circle - bottom left
-            circle2.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 10),
-            circle2.leadingAnchor.constraint(equalTo: leadingAnchor, constant: -20),
-            
-            // Small circle - center right
-            circle3.centerYAnchor.constraint(equalTo: centerYAnchor),
-            circle3.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 30)
-        ])
-    }
-    
-    func createDecorativeCircle(size: CGFloat, alpha: CGFloat) -> UIView {
-        let circle = UIView()
-        circle.backgroundColor = UIColor.white.withAlphaComponent(alpha)
-        circle.layer.cornerRadius = size / 2
-        circle.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            circle.widthAnchor.constraint(equalToConstant: size),
-            circle.heightAnchor.constraint(equalToConstant: size)
-        ])
-        
-        return circle
     }
 
+
+    // MARK: - Decorative Circles
+    private func addDecorativeCircles() {
+
+        func makeCircle(size: CGFloat, alpha: CGFloat) -> UIView {
+            let v = UIView()
+            v.layer.cornerRadius = size / 2
+            v.backgroundColor = .white.withAlphaComponent(alpha)
+            v.translatesAutoresizingMaskIntoConstraints = false
+
+            addSubview(v)
+            decorativeCircles.append(v)
+
+            NSLayoutConstraint.activate([
+                v.widthAnchor.constraint(equalToConstant: size),
+                v.heightAnchor.constraint(equalToConstant: size)
+            ])
+
+            return v
+        }
+
+        let c1 = makeCircle(size: 120, alpha: 0.08)
+        let c2 = makeCircle(size: 80, alpha: 0.06)
+        let c3 = makeCircle(size: 60, alpha: 0.08)
+
+        // Positioning
+        NSLayoutConstraint.activate([
+            c1.topAnchor.constraint(equalTo: topAnchor, constant: -30),
+            c1.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 30),
+
+            c2.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 30),
+            c2.leadingAnchor.constraint(equalTo: leadingAnchor, constant: -20),
+
+            c3.centerYAnchor.constraint(equalTo: centerYAnchor),
+            c3.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 40)
+        ])
+    }
+
+
+    // MARK: - Layout
     public override func layoutSubviews() {
         super.layoutSubviews()
         gradientLayer.frame = bounds
     }
 
+    // MARK: - Action
     @objc func buttonPressed() {
         buttonAction?()
     }
