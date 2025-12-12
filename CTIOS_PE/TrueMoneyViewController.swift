@@ -115,17 +115,17 @@ class TrueMoneyViewController: UIViewController, Themeable {
         // Row 1
         firstRow = IconRowView(
             items: [
-                (AppImages.TrueMoneyIcons.bills, AppStrings.TrueMoney.bills),
+                (AppImages.DashboardIcons.bills, AppStrings.TrueMoney.bills),
                 (
-                    AppImages.TrueMoneyIcons.insurance,
+                    AppImages.DashboardIcons.insurance,
                     AppStrings.TrueMoney.insurance
                 ),
                 (
-                    AppImages.TrueMoneyIcons.electricity,
+                    AppImages.DashboardIcons.electricity,
                     AppStrings.TrueMoney.electricity
                 ),
                 (
-                    AppImages.TrueMoneyIcons.prepaid,
+                    AppImages.DashboardIcons.prepaid,
                     AppStrings.TrueMoney.prepaid
                 ),
             ],
@@ -155,13 +155,13 @@ class TrueMoneyViewController: UIViewController, Themeable {
         // Row 2
         secondRow = IconRowView(
             items: [
-                (AppImages.TrueMoneyIcons.wallet, AppStrings.TrueMoney.wallet),
-                (AppImages.TrueMoneyIcons.home, AppStrings.TrueMoney.home),
+                (AppImages.DashboardIcons.wallet, AppStrings.TrueMoney.wallet),
+                (AppImages.DashboardIcons.home, AppStrings.TrueMoney.home),
                 (
-                    AppImages.TrueMoneyIcons.rewards,
+                    AppImages.DashboardIcons.rewards,
                     AppStrings.TrueMoney.rewards
                 ),
-                (AppImages.TrueMoneyIcons.mobile, AppStrings.TrueMoney.mobile),
+                (AppImages.DashboardIcons.mobile, AppStrings.TrueMoney.mobile),
             ],
             startTag: 4,
             target: self,

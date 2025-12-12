@@ -5,29 +5,75 @@
 //  Created by Henil Gandhi on 10/12/25.
 //
 
-
 import UIKit
 
 struct DarkTheme: ThemeProtocol {
-    // Colors
-    var primary: UIColor = UIColor(hex: "#FF4E4E")
-    var background: UIColor = UIColor(hex: "#121212")
-    var cardBackground: UIColor = UIColor(hex: "#1E1E1E")
-    var textPrimary: UIColor = .white
-    var textSecondary: UIColor = UIColor(hex: "#B3B3B3")
-    var border: UIColor = UIColor(hex: "#333333")
 
-    // Fonts (same unless you want changes)
-    var headerFont = UIFont.systemFont(ofSize: 22, weight: .bold)
-    var titleFont = UIFont.systemFont(ofSize: 18, weight: .semibold)
-    var subtitleFont = UIFont.systemFont(ofSize: 16, weight: .medium)
-    var bodyFont = UIFont.systemFont(ofSize: 14, weight: .regular)
-    var smallFont = UIFont.systemFont(ofSize: 12, weight: .regular)
-    var buttonFont: UIFont = UIFont.systemFont(ofSize: 16, weight: .semibold)
+    private let ct = CleverTapVariables.shared
 
-    // UI Properties
+    // MARK: - Colors
+    var primary: UIColor {
+        UIColor(hex: ct.dark_primary)
+    }
+
+    var background: UIColor {
+        UIColor(hex: ct.dark_background)
+    }
+
+    var cardBackground: UIColor {
+        UIColor(hex: ct.dark_cardBackground)
+    }
+
+    var textPrimary: UIColor {
+        UIColor(hex: ct.dark_textPrimary)
+    }
+
+    var textSecondary: UIColor {
+        UIColor(hex: ct.dark_textSecondary)
+    }
+
+    var border: UIColor {
+        UIColor(hex: ct.dark_border)
+    }
+
+    // MARK: - Font Mapping Helper
+    private func font(weight: String, size: Int) -> UIFont {
+        switch weight.lowercased() {
+        case "bold": return .systemFont(ofSize: CGFloat(size), weight: .bold)
+        case "semibold": return .systemFont(ofSize: CGFloat(size), weight: .semibold)
+        case "medium": return .systemFont(ofSize: CGFloat(size), weight: .medium)
+        default: return .systemFont(ofSize: CGFloat(size), weight: .regular)
+        }
+    }
+
+    // MARK: - Fonts (Dynamic)
+    var headerFont: UIFont {
+        font(weight: ct.dark_headerFont_weight, size: ct.dark_headerFont)
+    }
+
+    var titleFont: UIFont {
+        font(weight: ct.dark_titleFont_weight, size: ct.dark_titleFont)
+    }
+
+    var subtitleFont: UIFont {
+        font(weight: ct.dark_subtitleFont_weight, size: ct.dark_subtitleFont)
+    }
+
+    var bodyFont: UIFont {
+        font(weight: ct.dark_bodyFont_weight, size: ct.dark_bodyFont)
+    }
+
+    var smallFont: UIFont {
+        font(weight: ct.dark_smallFont_weight, size: ct.dark_smallFont)
+    }
+
+    var buttonFont: UIFont {
+        font(weight: ct.dark_buttonFont_weight, size: ct.dark_buttonFont)
+    }
+
+    // MARK: - UI Properties (Static)
     var cornerRadius: CGFloat = 18
-    var shadowOpacity: Float = 0.0   // Dark theme rarely uses shadows
+    var shadowOpacity: Float = 0.0
     var shadowRadius: CGFloat = 0
     var spacing: CGFloat = 12
 }

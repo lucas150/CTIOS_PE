@@ -21,6 +21,27 @@ extension UIViewController {
     
 }
 
+
+extension UIImage {
+    /// Loads an image from assets or SF Symbols.
+    static func loadCTImage(_ name: String) -> UIImage? {
+        
+        // 1️⃣ Try asset catalog
+        if let assetImage = UIImage(named: name) {
+            return assetImage
+        }
+        
+        // 2️⃣ Try SF Symbol
+        if let systemImage = UIImage(systemName: name) {
+            return systemImage
+        }
+        
+        print("⚠️ Image not found:", name)
+        return nil
+    }
+}
+
+
 extension UIColor {
     convenience init(hex: String) {
         var cleanHex = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()

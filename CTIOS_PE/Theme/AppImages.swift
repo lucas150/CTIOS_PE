@@ -5,48 +5,82 @@
 //  Created by Henil Gandhi on 11/12/25.
 //
 
-
 import UIKit
+import CleverTapSDK
 
 enum AppImages {
 
-    static let logo = UIImage(named: "aia_white")
+    // MARK: - Logo
+    static var logo: UIImage? {
+        UIImage.loadCTImage(CleverTapVariables.shared.logo)
+    }
 
+    // MARK: - Icons
     enum Icons {
-        static let login = UIImage(named: "login_icon")
-
-        static let carInsurance = UIImage(named: "car-inusrance")
-        static let healthInsurance = UIImage(named: "Health_Insaurance")
-        static let lifeInsurance = UIImage(named: "Life_Insauracne")
+        static var login: UIImage? {
+            UIImage.loadCTImage(CleverTapVariables.shared.login_icon)
+        }
+        static var carInsurance: UIImage? {
+            UIImage.loadCTImage(CleverTapVariables.shared.carInsurance_icon)
+        }
+        static var healthInsurance: UIImage? {
+            UIImage.loadCTImage(CleverTapVariables.shared.healthInsurance_icon)
+        }
+        static var lifeInsurance: UIImage? {
+            UIImage.loadCTImage(CleverTapVariables.shared.lifeInsurance_icon)
+        }
     }
 
-    enum Carousel {
-        static let placeholder = UIImage(named: "carousel_placeholder")
-    }
-
+    // MARK: - Challenges
     enum Challenges {
-        static let run = UIImage(named: "aia_challeng_1")
-        static let yoga = UIImage(named: "aia_challeng_2")
-        static let meditate = UIImage(named: "aia_challeng_3")
-    }
-    
-    enum TrueMoneyIcons {
-        static let payNow = UIImage(named: "PayNow")
-
-        // You can replace these with real asset names
-        static let bills = UIImage(systemName: "doc.text")
-        static let insurance = UIImage(systemName: "shield")
-        static let electricity = UIImage(systemName: "bolt.fill")
-        static let prepaid = UIImage(systemName: "creditcard")
-
-        static let wallet = UIImage(systemName: "wallet.pass")
-        static let home = UIImage(systemName: "house.fill")
-        static let rewards = UIImage(systemName: "gift.fill")
-        static let mobile = UIImage(systemName: "phone.fill")
+        static var run: UIImage? {
+            UIImage.loadCTImage(CleverTapVariables.shared.challenge_run_img)
+        }
+        static var yoga: UIImage? {
+            UIImage.loadCTImage(CleverTapVariables.shared.challenge_yoga_img)
+        }
+        static var meditate: UIImage? {
+            UIImage.loadCTImage(CleverTapVariables.shared.challenge_meditate_img)
+        }
     }
 
+    // MARK: - Dashboard
+    enum DashboardIcons {
+        static var payNow: UIImage? {
+            UIImage.loadCTImage(CleverTapVariables.shared.db_payNow_img)
+        }
+        static var bills: UIImage? {
+            UIImage.loadCTImage(CleverTapVariables.shared.db_bills_img)
+        }
+        static var insurance: UIImage? {
+            UIImage.loadCTImage(CleverTapVariables.shared.db_insurance_img)
+        }
+
+        static var electricity: UIImage? {
+            UIImage.loadCTImage(CleverTapVariables.shared.db_electricity_img)
+            
+        }
+        static var prepaid: UIImage? {
+            UIImage.loadCTImage(CleverTapVariables.shared.db_prepaid_img)
+        }
+        static var wallet: UIImage? {
+            UIImage.loadCTImage(CleverTapVariables.shared.db_wallet_img)
+        }
+        static var home: UIImage? {
+            UIImage.loadCTImage(CleverTapVariables.shared.db_home_img)
+        }
+        static var rewards: UIImage? {
+            UIImage.loadCTImage(CleverTapVariables.shared.db_rewards_img)
+        }
+        static var mobile: UIImage? {
+            UIImage.loadCTImage(CleverTapVariables.shared.db_mobile_img)
+        }
+    }
+
+    // MARK: - Cards
     enum Cards {
-        static let cardBlack = UIImage(named: "card_black")
+        static var cardBlack: UIImage? {
+            UIImage.loadCTImage(CleverTapVariables.shared.cardBlack_img)
+        }
     }
-
 }

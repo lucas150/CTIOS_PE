@@ -4,47 +4,86 @@
 //
 //  Created by Henil Gandhi on 11/12/25.
 //
-
-
 enum AppStrings {
-        static let headerTitle = "Logo"
 
+    // ROOT LEVEL
+    static var headerTitle: String {
+        CleverTapVariables.shared.headerTitle
+    }
+
+    // MARK: - Home
     enum Home {
-
-            static let carouselTitle = "" // if needed later
-            static let challengesTitle = "Challenges"
-            static let categoriesTitle = "Categories"
-        
-            static let login = "Login"
-            static let dashboard = "Dashboard"
+        static var carouselTitle: String {
+            CleverTapVariables.shared.home_carousel_title
         }
-
-        enum ChallengeItems {
-            static let run = "Run 5km"
-            static let yoga = "Yoga"
-            static let meditate = "Meditate"
+        static var challengesTitle: String {
+            CleverTapVariables.shared.home_challenges_title
         }
-
-        enum CategoryItems {
-            static let carInsurance = "Car Insurance"
-            static let healthInsurance = "Health Insurance"
-            static let lifeInsurance = "Life Insurance"
+        static var categoriesTitle: String {
+            CleverTapVariables.shared.home_categories_title
         }
-    
-        enum TrueMoney {
-            static let payNow = "Pay Now"
-
-            // Category labels
-            static let bills = "Bills"
-            static let insurance = "Insurance"
-            static let electricity = "Electricity"
-            static let prepaid = "Prepaid"
-
-            static let wallet = "Wallet"
-            static let home = "Home"
-            static let rewards = "Rewards"
-            static let mobile = "Mobile"
+        static var login: String {
+            CleverTapVariables.shared.home_login_title
         }
+        static var dashboard: String {
+            CleverTapVariables.shared.home_dashboard_title
+        }
+    }
 
+    // MARK: - Challenge Items
+    enum ChallengeItems {
+        static var run: String {
+            CleverTapVariables.shared.challenge_run_title
+        }
+        static var yoga: String {
+            CleverTapVariables.shared.challenge_yoga_title
+        }
+        static var meditate: String {
+            CleverTapVariables.shared.challenge_meditate_title
+        }
+    }
 
+    // MARK: - Category Items
+    enum CategoryItems {
+        static var carInsurance: String {
+            CleverTapVariables.shared.cat_carInsurance_title
+        }
+        static var healthInsurance: String {
+            CleverTapVariables.shared.cat_healthInsurance_title
+        }
+        static var lifeInsurance: String {
+            CleverTapVariables.shared.cat_lifeInsurance_title
+        }
+    }
+
+    // MARK: - TrueMoney Dashboard Texts
+    enum TrueMoney {
+        static var payNow: String {
+            CleverTapVariables.shared.db_payNow_title
+        }
+        static var bills: String {
+            CleverTapVariables.shared.db_bills_title
+        }
+        static var insurance: String {
+            CleverTapVariables.shared.db_insurance_title
+        }
+        static var electricity: String {
+            CleverTapVariables.shared.db_electricity_title
+        }
+        static var prepaid: String {
+            CleverTapVariables.shared.db_prepaid_title
+        }
+        static var wallet: String {
+            CleverTapVariables.shared.db_wallet_title
+        }
+        static var home: String {
+            CleverTapVariables.shared.db_home_title
+        }
+        static var rewards: String {
+            CleverTapVariables.shared.db_rewards_title
+        }
+        static var mobile: String {
+            CleverTapVariables.shared.db_mobile_title
+        }
+    }
 }
